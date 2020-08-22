@@ -5,9 +5,15 @@
         },
         {
             "vrsta": "dostava na dom"
+        },
+        {
+            "vrsta": "v gostilni"
+        },
+        {
+            "vrsta": ""
         }
     ],
-    "stroški": [
+    "stroski": [
         {
             "ime": "dodatni delavec",
             "znesek": 2200
@@ -15,6 +21,10 @@
         {
             "ime": "sestavine",
             "znesek": 20
+        },
+        {
+            "ime": "poštnina",
+            "znesek": 10
         }
     ],
     "sladice": [
@@ -22,7 +32,14 @@
             "ime": "torta",
             "datum": "2020-08-22",
             "cena": 60,
-            "strošek": "dodatni delavec",
+            "strosek": "dodatni delavec",
+            "prodaja": "osebni prevzem"
+        },
+        {
+            "ime": "pana cota",
+            "datum": "2020-08-22",
+            "cena": 300,
+            "strosek": "sestavine",
             "prodaja": null
         }
     ]

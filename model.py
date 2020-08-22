@@ -2,20 +2,20 @@ import json
 
 class Uporabnik:
 
-    def __init__(self, uporabnisko_ime, zasifrirano_geslo, slaščičar):
+    def __init__(self, uporabnisko_ime, zasifrirano_geslo, slascicar):
         self.uporabnisko_ime = uporabnisko_ime
         self.zasifrirano_geslo = zasifrirano_geslo
-        self.slaščičar = slaščičar
+        self.slascicar = slascicar
     
     def preveri_geslo(self, zasifrirano_geslo):
         if self.zasifrirano_geslo != zasifrirano_geslo:
-            raise ValueError('Geslo je napačno!')
+            raise ValueError('Geslo je napacno!')
     
     def shrani_stanje(self, ime_datoteke):
         slovar_s_sladicami = {
             'uporabnisko_ime': self.uporabnisko_ime,
             'zasifrirano_geslo': self.zasifrirano_geslo,
-            'slaščičar': self.slaščičar.slovar_sladic(),
+            'slascicar': self.slascicar.slovar_sladic(),
         }
         with open(ime_datoteke, 'w') as datoteka:
             json.dump(slovar_s_sladicami, datoteka, ensure_ascii=False, indent=4)
@@ -26,14 +26,14 @@ class Uporabnik:
             slovar_s_sladicami = json.load(datoteka)
         uporabnisko_ime = slovar_s_sladicami['uporabnisko_ime']
         zasifrirano_geslo = slovar_s_sladicami['zasifrirano_geslo']
-        slaščičar = Slaščičar.nalozi_iz_slovarja(slovar_s_sladicami['slaščičar'])
-        return cls(uporabnisko_ime, zasifrirano_geslo, slaščičar)
+        slascicar = Slascicar.nalozi_iz_slovarja(slovar_s_sladicami['slascicar'])
+        return cls(uporabnisko_ime, zasifrirano_geslo, slascicar)
 
-class Slaščičar:
+class Slascicar:
 
     def __init__(self):
         self.prodaje = []
-        self.vsi_stroški = []
+        self.vsi_stroski = []
         self.vse_sladice = []
         self._imena_prodajanih_sladic = []
         self._vrste_prodaj = {}
@@ -43,38 +43,38 @@ class Slaščičar:
         
     def dodaj_prodajo(self, vrsta):
         if vrsta in self._vrste_prodaj:
-            raise ValueError('Vrsta te prodaje že obstaja!')
+            raise ValueError('Vrsta te prodaje ze obstaja!')
         nova_prodaja = Prodaja(vrsta, self)
         self.prodaje.append(nova_prodaja)
         self._vrste_prodaj[vrsta] = nova_prodaja
         self._sladice_prodaje[nova_prodaja] = []
         return nova_prodaja
 
-    def dodaj_strošek(self, ime, strošek):
+    def dodaj_strosek(self, ime, strosek):
         if ime in self._imena_stroskov:
-            raise ValueError('Strošek s tem imenom že obstaja!')
-        nov_strošek = Strošek(ime, strošek, self)
-        self.vsi_stroški.append(nov_strošek)
-        self._imena_stroskov[ime] = nov_strošek
-        self._sladice_stroski[nov_strošek] = []
-        return nov_strošek
+            raise ValueError('Strosek s tem imenom ze obstaja!')
+        nov_strosek = Strosek(ime, strosek, self)
+        self.vsi_stroski.append(nov_strosek)
+        self._imena_stroskov[ime] = nov_strosek
+        self._sladice_stroski[nov_strosek] = []
+        return nov_strosek
 
-    def dodaj_sladico(self, ime, datum, cena, strošek, prodaja=None):
+    def dodaj_sladico(self, ime, datum, cena, strosek, prodaja=None):
         self._preveri_prodajo(prodaja)
-        self._preveri_strošek(strošek)
-        nova_sladica = Sladica(ime, datum, cena, strošek, prodaja)
+        self._preveri_strosek(strosek)
+        nova_sladica = Sladica(ime, datum, cena, strosek, prodaja)
         self.vse_sladice.append(nova_sladica)
-        self._sladice_stroski[strošek].append(nova_sladica)
-        #self._vrste_prodaj[prodaja].append(nova_sladica)
+        self._sladice_stroski[strosek].append(nova_sladica)
+        #self._sladice_prodaje[prodaja].append(nova_sladica)
         return nova_sladica
 
     def _preveri_prodajo(self, prodaja):
-        if prodaja is not None and prodaja.slaščičar != self:
-            raise ValueError(f'Prodaja {prodaja} ne spada v to slaščičarno!')
+        if prodaja is not None and prodaja.slascicar != self:
+            raise ValueError(f'Prodaja {prodaja} ne spada v to slascicarno!')
 
-    def _preveri_strošek(self, strošek):
-        if strošek.slaščičar != self:
-            raise ValueError(f'Strošek {strošek} ne spada v to slaščičarno!')
+    def _preveri_strosek(self, strosek):
+        if strosek.slascicar != self:
+            raise ValueError(f'Strosek {strosek} ne spada v to slascicarno!')
             
     def odstrani_sladico(self, sladica):
         return self.vse_sladice.remove(sladica)
@@ -82,14 +82,14 @@ class Slaščičar:
     def poisci_prodajo(self, vrsta):
         return self._vrste_prodaj[vrsta]
 
-    def poisci_strošek(self, ime):
+    def poisci_strosek(self, ime):
         return self._imena_stroskov[ime]
 
     def sladice_po_prodajah(self, prodaja):
         yield from self._vrste_prodaj[prodaja]
 
-    def sladice_po_stroskih(self, strošek):
-        yield from self._imena_stroskov[strošek]
+    def sladice_po_stroskih(self, strosek):
+        yield from self._imena_stroskov[strosek]
 
     def prodane_sladice(self):
         prodane_sladice = []
@@ -115,12 +115,18 @@ class Slaščičar:
     def prihodki(self):
         z = 0
         for sladica in self.vse_sladice:
-            if sladica.ime in self.prodane_sladice():
-                z += sladica.cena
-        return int(z)
+            if sladica in self.prodane_sladice():
+                z += int(sladica.cena)
+        return z
+
+    def stroski_skupno(self):
+        z = 0
+        for sladica in self.prodane_sladice():
+            z += int(sladica.strosek.znesek)
+        return z
     
-    def dobiček(self):
-        return int(self.prihodki() - sum([strošek.znesek for strošek in self.vsi_stroški]))
+    def dobicek(self):
+        return int(self.prihodki() - self.stroski_skupno())
 
     def najbolj_prodajana_sladica(self):
         s = {}
@@ -136,35 +142,35 @@ class Slaščičar:
             'prodaje': [{
                 'vrsta': prodaja.vrsta,
             } for prodaja in self.prodaje],
-            'stroški': [{
-                'ime': strošek.ime,
-                'znesek': strošek.znesek,
-            } for strošek in self.vsi_stroški],
+            'stroski': [{
+                'ime': strosek.ime,
+                'znesek': strosek.znesek,
+            } for strosek in self.vsi_stroski],
             'sladice': [{
                 'ime': sladica.ime,
                 'datum': str(sladica.datum),
                 'cena': sladica.cena,
-                'strošek': sladica.strošek.ime,
+                'strosek': sladica.strosek.ime,
                 'prodaja': None if sladica.prodaja is None else sladica.prodaja.vrsta,
             } for sladica in self.vse_sladice],
         }
 
     @classmethod
     def nalozi_iz_slovarja(cls, slovar_sladic):
-        slaščičar = cls()
-        for prodaja in slovar_sladic['prodaje']:
-            dodaj_prodajo = slaščičar.dodaj_prodajo(prodaja['vrsta'])
-        for strošek in slovar_sladic['stroški']:
-            dodaj_strošek = slaščičar.dodaj_strošek(strošek['ime'], strošek['znesek'])
+        slascicar = cls()
+        for prosdaja in slovar_sladic['prodaje']:
+            dodaj_prodajo = slascicar.dodaj_prodajo(prosdaja['vrsta'])
+        for strosek in slovar_sladic['stroski']:
+            dodaj_strosek = slascicar.dodaj_strosek(strosek['ime'], strosek['znesek'])
         for sladica in slovar_sladic['sladice']:
-            slaščičar.dodaj_sladico(
+            slascicar.dodaj_sladico(
                 sladica['ime'],
                 sladica['datum'],
                 sladica['cena'],
-                slaščičar._imena_stroskov[sladica['strošek']],
-                slaščičar._vrste_prodaj[sladica['prodaja']],
+                slascicar._imena_stroskov[sladica['strosek']],
+                slascicar._vrste_prodaj[sladica['prodaja']],
             )
-        return slaščičar
+        return slascicar
     
     def shrani_stanje(self, ime_datoteke):
         with open(ime_datoteke, 'w') as datoteka:
@@ -178,9 +184,9 @@ class Slaščičar:
 
 class Prodaja:
 
-    def __init__(self, vrsta, slaščičar):
-        self.vrsta = vrsta #po pošti, osebno, ...
-        self.slaščičar = slaščičar
+    def __init__(self, vrsta, slascicar):
+        self.vrsta = vrsta #po posti, osebno, ...
+        self.slascicar = slascicar
         
     def __str__(self):
         return f'{self.vrsta}'
@@ -188,12 +194,12 @@ class Prodaja:
     def __repr__(self):
         return f'{self.vrsta}'
 
-class Strošek:
+class Strosek:
 
-    def __init__(self, ime, znesek, slaščičar):
-        self.ime = ime # npr. cena sestavin, poštnina(prodaja po pošti), dodatni delavec, ...
+    def __init__(self, ime, znesek, slascicar):
+        self.ime = ime # npr. cena sestavin, postnina(prodaja po posti), dodatni delavec, ...
         self.znesek = int(znesek)
-        self.slaščičar = slaščičar
+        self.slascicar = slascicar
 
     def __str__(self):
         return f'{self.ime}'
@@ -203,11 +209,11 @@ class Strošek:
 
 class Sladica:
 
-    def __init__(self, ime, datum, cena, strošek, prodaja):
+    def __init__(self, ime, datum, cena, strosek, prodaja):
         self.ime = ime
         self.datum = datum
         self.cena = cena
-        self.strošek = strošek
+        self.strosek = strosek
         self.prodaja = prodaja
 
     def __str__(self):

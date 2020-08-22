@@ -1,5 +1,5 @@
 from datetime import date
-from model import Slaščičar
+from model import Slascicar
 
 LOGO = '''
 _______  ___      _______  ______   ___   _  _______  _______  __    _  _______  ______  
@@ -15,9 +15,9 @@ _______  ___      _______  ______   ___   _  _______  _______  __    _  _______ 
 DATOTEKA_S_SLADICAMI = 'stanje.json'
 
 try:
-    slaščičar = Slaščičar.nalozi_stanje(DATOTEKA_S_SLADICAMI)
+    slascicar = Slascicar.nalozi_stanje(DATOTEKA_S_SLADICAMI)
 except FileNotFoundError:
-    slaščičar = Slaščičar()
+    slascicar = Slascicar()
 
 def logo(niz):
     return f'\033[1;35m{niz}\033[0m'
@@ -37,7 +37,7 @@ def vnesi_stevilo(pozdrav):
             stevilo = input(pozdrav)
             return int(stevilo)
         except ValueError:
-            print(f'Prosim, da vnesete število!')
+            print(f'Prosim, da vnesete stevilo!')
 
 def izberi(seznam):
     for indeks, (oznaka, _) in enumerate(seznam, 1):
@@ -48,18 +48,18 @@ def izberi(seznam):
             _, element = seznam[izbira - 1]
             return element
         else:
-            print(f'Izberi število med 1 in {len(seznam)}')
+            print(f'Izberi stevilo med 1 in {len(seznam)}')
 
-def prikaz_skupnega_dobička(dobiček):
-    if dobiček > 0:
-        return f'trenutno je skupni dobiček: {modro(dobiček)} €'
-    elif dobiček < 0:
-        return f'trenutno je skupni dobiček: {rdece(dobiček)} €'
+def prikaz_skupnega_dobicka(dobicek):
+    if dobicek > 0:
+        return f'{modro(dobicek)} €'
+    elif dobicek < 0:
+        return f'{rdece(dobicek)} €'
     else:
-        return f'trenutno je skupni dobiček: {dobiček} €'
+        return f'{dobicek} €'
 
 def prikaz_sladic(sladica):
-    if sladica in slaščičar.prodane_sladice():
+    if sladica in slascicar.prodane_sladice():
         return f'Ta {sladica} je prodana.'
     else:
         return f'Ta {rdece(sladica)} ni prodana!'
@@ -80,11 +80,11 @@ def osnovne_meni():
             print()
             moznosti = [
                 ('dodaj prodajo', dodaj_prodajo),
-                ('dodaj strošek', dodaj_strošek),
+                ('dodaj strosek', dodaj_strosek),
                 ('dodaj sladico', dodaj_sladico),
                 ('poglej ne prodane sladice', neprodane_sladice),
                 ('poglej vse sladice', vse_sladice),
-                ('poglej dobiček/skupne stroške', stanje_denarja),
+                ('poglej dobicek/skupne stroske', stanje_denarja),
             ]
             izbira = izberi(moznosti)
             izbira()
@@ -92,7 +92,7 @@ def osnovne_meni():
             print()
             input('Pritisnite Enter za shranjevanje in vrnitev v osnovni meni')
             print(80 * '=')
-            slaščičar.shrani_stanje(DATOTEKA_S_SLADICAMI)
+            slascicar.shrani_stanje(DATOTEKA_S_SLADICAMI)
         except ValueError as e:
             print(rdece(e.args[0]))
             print(80 * '=')
@@ -102,19 +102,13 @@ def osnovne_meni():
             break
 
 def dodaj_prodajo():
-    vrsta = input('Vnesite način prodaje sladice (npr. osebni prevzem, dostava na dom, ...)> ')
-    slaščičar.dodaj_prodajo(vrsta)
+    vrsta = input('Vnesite nacin prodaje sladice (npr. osebni prevzem, dostava na dom, ...)> ')
+    slascicar.dodaj_prodajo(vrsta)
 
-def dodaj_strošek():
-    ime = input('Vnesite ime stroška (npr. sestavine, dodatni delavec, ...)> ')
+def dodaj_strosek():
+    ime = input('Vnesite ime stroska (npr. sestavine, dodatni delavec, ...)> ')
     znesek = vnesi_stevilo('znesek> ')
-    slaščičar.dodaj_strošek(ime, znesek)
-
-def izberi_strošek(stroški):
-    return izberi([(strošek, strošek)for strošek in stroški],)
-
-def izberi_prodajo(prodaje):
-    return izberi([(prodaja, prodaja)for prodaja in prodaje],)
+    slascicar.dodaj_strosek(ime, znesek)
 
 def dodaj_sladico():
     print('Vnesite podatke o sladici:')
@@ -122,29 +116,31 @@ def dodaj_sladico():
     ime = input('Ime sladice>')
     datum = date.today()
     cena = vnesi_stevilo('Prodajna cena>')
-    print('Izberite strošek:')
-    strošek = izberi_strošek(slaščičar.vsi_stroški)
-    print("Izberite na kakšen način ste prodali sladico. Če sladice še niste prodali, izberite možnost 'None'.")
-    prodaja = izberi_prodajo([None] + slaščičar.prodaje)
-    slaščičar.dodaj_sladico(ime, datum, cena, strošek, prodaja)
-    print('Sladica uspešno dodana!')
+    print('Izberite strosek:')
+    strosek = izberi_strosek(slascicar.vsi_stroski)
+    print("Izberite na kaksen nacin ste prodali sladico. ce sladice se niste prodali, izberite moznost 'None'.")
+    prodaja = izberi_prodajo([None] + slascicar.prodaje)
+    slascicar.dodaj_sladico(ime, datum, cena, strosek, prodaja)
+    print('Sladica uspesno dodana!')
 
+def izberi_strosek(stroski):
+    return izberi([(strosek, strosek)for strosek in stroski],)
+
+def izberi_prodajo(prodaje):
+    return izberi([(prodaja, prodaja)for prodaja in prodaje],)
 
 def neprodane_sladice():
-    for sladica  in slaščičar.vse_sladice:
+    for sladica  in slascicar.vse_sladice:
         if sladica.prodaja is None:
-            print(f'{sladica.ime}: {sladica.cena}€')
+            print(f'{rdece(sladica.ime)}: {sladica.cena}€')
 
 def vse_sladice():
-    print(slaščičar.vse_sladice)
+    pass
 
 def stanje_denarja():
-    print(f'Vaš dobiček je {prikaz_skupnega_dobička(slaščičar.dobiček())}')
-
+    print(f'Skupni stroski so {slascicar.stroski_skupno()}€')
+    print(f'Vas dobicek je {prikaz_skupnega_dobicka(slascicar.dobicek())}')
 
 zacetna_stran()
 osnovne_meni()
            
-
-
-

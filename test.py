@@ -1,19 +1,29 @@
 from datetime import date
-from model import Slaščičar, Prodaja, Strošek, Sladica
+from model import Slascicar, Prodaja, Strosek, Sladica
 
-slaščičar = Slaščičar()
+slascicar = Slascicar()
 
-pošta = slaščičar.dodaj_prodajo('po pošti')
-osebno = slaščičar.dodaj_prodajo('osebno')
+posta = slascicar.dodaj_prodajo('po posti')
+osebno = slascicar.dodaj_prodajo('osebno')
 
-sestavine = slaščičar.dodaj_strošek('sestavine', 20)
-dodatni_delavec = slaščičar.dodaj_strošek('dodatni_delavec', 50)
+sestavine = slascicar.dodaj_strosek('sestavine', 20)
+dodatni_delavec = slascicar.dodaj_strosek('dodatni_delavec', 50)
 
-torta = slaščičar.dodaj_sladico('višnjeva_torta', date(2020, 6, 12), 50, sestavine, pošta)
-torta = slaščičar.dodaj_sladico('višnjeva_torta', date(2020, 6, 12), 50, sestavine, pošta)
-torta = slaščičar.dodaj_sladico('višnjeva_torta', date(2020, 6, 12), 50, sestavine, pošta)
-makroni = slaščičar.dodaj_sladico('makroni', date(2020, 7, 19), 10, dodatni_delavec, osebno)
-mafini = slaščičar.dodaj_sladico('mafini', date(2020, 7, 19), 20, sestavine, osebno)
-torta = slaščičar.dodaj_sladico('čokoladna_torta', date(2020, 6, 12), 100, sestavine)
+torta = slascicar.dodaj_sladico('visnjeva_torta', date(2020, 6, 12), 50, sestavine, posta)
+torta = slascicar.dodaj_sladico('visnjeva_torta', date(2020, 6, 12), 50, sestavine, posta)
+torta = slascicar.dodaj_sladico('visnjeva_torta', date(2020, 6, 12), 50, sestavine, posta)
+makroni = slascicar.dodaj_sladico('makroni', date(2020, 7, 19), 10, dodatni_delavec, osebno)
+mafini = slascicar.dodaj_sladico('mafini', date(2020, 7, 19), 20, sestavine, osebno)
+torta = slascicar.dodaj_sladico('cokoladna_torta', date(2020, 6, 12), 100, sestavine, osebno)
 
-print(slaščičar._vrste_prodaj)
+print(slascicar._vrste_prodaj)
+
+print(slascicar.prihodki())
+
+print(slascicar.dobicek())
+
+print(slascicar.slovar_sladic()["stroski"])
+
+for strosek in slascicar.slovar_sladic()['stroski']:
+    #dodaj_strosek = slascicar.dodaj_strosek(strosek['ime'], strosek['znesek'])
+    print(strosek['ime'])
