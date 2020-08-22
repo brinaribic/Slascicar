@@ -12,21 +12,21 @@ class Uporabnik:
             raise ValueError('Geslo je napačno!')
     
     def shrani_stanje(self, ime_datoteke):
-        slovar_sladic = {
+        slovar_s_sladicami = {
             'uporabnisko_ime': self.uporabnisko_ime,
             'zasifrirano_geslo': self.zasifrirano_geslo,
             'slaščičar': self.slaščičar.slovar_sladic(),
         }
         with open(ime_datoteke, 'w') as datoteka:
-            json.dump(slovar_sladic, datoteka, ensure_ascii=False, indent=4)
+            json.dump(slovar_s_sladicami, datoteka, ensure_ascii=False, indent=4)
     
     @classmethod
     def nalozi_stanje(cls, ime_datoteke):
         with open(ime_datoteke) as datoteka:
-            slovar_sladic = json.load(datoteka)
-        uporabnisko_ime = slovar_sladic['uporabnisko_ime']
-        zasifrirano_geslo = slovar_sladic['zasifrirano_geslo']
-        slaščičar = Slaščičar.nalozi_iz_slovarja(slovar_sladic['slaščičar'])
+            slovar_s_sladicami = json.load(datoteka)
+        uporabnisko_ime = slovar_s_sladicami['uporabnisko_ime']
+        zasifrirano_geslo = slovar_s_sladicami['zasifrirano_geslo']
+        slaščičar = Slaščičar.nalozi_iz_slovarja(slovar_s_sladicami['slaščičar'])
         return cls(uporabnisko_ime, zasifrirano_geslo, slaščičar)
 
 class Slaščičar:
@@ -117,10 +117,10 @@ class Slaščičar:
         for sladica in self.vse_sladice:
             if sladica.ime in self.prodane_sladice():
                 z += sladica.cena
-        return z
+        return int(z)
     
     def dobiček(self):
-        return self.prihodki() - sum([strošek.znesek for strošek in self.vsi_stroški])
+        return int(self.prihodki() - sum([strošek.znesek for strošek in self.vsi_stroški]))
 
     def najbolj_prodajana_sladica(self):
         s = {}
@@ -144,8 +144,8 @@ class Slaščičar:
                 'ime': sladica.ime,
                 'datum': str(sladica.datum),
                 'cena': sladica.cena,
-                'strošek': sladica.storšek.ime,
-                'prodaja': None if sladica.prodaja == None else sladica.prodaja.vrsta,
+                'strošek': sladica.strošek.ime,
+                'prodaja': None if sladica.prodaja is None else sladica.prodaja.vrsta,
             } for sladica in self.vse_sladice],
         }
 
@@ -155,12 +155,12 @@ class Slaščičar:
         for prodaja in slovar_sladic['prodaje']:
             dodaj_prodajo = slaščičar.dodaj_prodajo(prodaja['vrsta'])
         for strošek in slovar_sladic['stroški']:
-            dodaj_strošek = slaščičar.dodaj_strošek(strošek['ime'], strošek['razporeditev'])
+            dodaj_strošek = slaščičar.dodaj_strošek(strošek['ime'], strošek['znesek'])
         for sladica in slovar_sladic['sladice']:
             slaščičar.dodaj_sladico(
-                sladica['znesek'],
+                sladica['ime'],
                 sladica['datum'],
-                sladica['opis'],
+                sladica['cena'],
                 slaščičar._imena_stroskov[sladica['strošek']],
                 slaščičar._vrste_prodaj[sladica['prodaja']],
             )
@@ -175,6 +175,7 @@ class Slaščičar:
         with open(ime_datoteke) as datoteka:
             slovar_sladic = json.load(datoteka)
         return cls.nalozi_iz_slovarja(slovar_sladic)
+
 class Prodaja:
 
     def __init__(self, vrsta, slaščičar):
@@ -200,7 +201,6 @@ class Strošek:
     def __repr__(self):
         return f'{self.ime}'
 
-
 class Sladica:
 
     def __init__(self, ime, datum, cena, strošek, prodaja):
@@ -215,3 +215,4 @@ class Sladica:
 
     def __repr__(self):
         return f'{self.ime}'
+

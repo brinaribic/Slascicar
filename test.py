@@ -16,12 +16,4 @@ makroni = slaščičar.dodaj_sladico('makroni', date(2020, 7, 19), 10, dodatni_d
 mafini = slaščičar.dodaj_sladico('mafini', date(2020, 7, 19), 20, sestavine, osebno)
 torta = slaščičar.dodaj_sladico('čokoladna_torta', date(2020, 6, 12), 100, sestavine)
 
-print(slaščičar.neprodane_sladice_cena())
-
-print(slaščičar.neprodane_sladice())
-
-print(slaščičar.prodane_sladice())
-
-print(slaščičar._sladice_stroski)
-
-print(slaščičar.najbolj_prodajana_sladica())
+print(slaščičar._vrste_prodaj)

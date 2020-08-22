@@ -1,0 +1,29 @@
+{
+    "prodaje": [
+        {
+            "vrsta": "osebni prevzem"
+        },
+        {
+            "vrsta": "dostava na dom"
+        }
+    ],
+    "stroški": [
+        {
+            "ime": "dodatni delavec",
+            "znesek": 2200
+        },
+        {
+            "ime": "sestavine",
+            "znesek": 20
+        }
+    ],
+    "sladice": [
+        {
+            "ime": "torta",
+            "datum": "2020-08-22",
+            "cena": 60,
+            "strošek": "dodatni delavec",
+            "prodaja": null
+        }
+    ]
+}
