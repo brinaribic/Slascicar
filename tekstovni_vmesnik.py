@@ -58,12 +58,6 @@ def prikaz_skupnega_dobicka(dobicek):
     else:
         return f'{dobicek} €'
 
-def prikaz_sladic(sladica):
-    if sladica in slascicar.prodane_sladice():
-        return f'Ta {sladica} je prodana.'
-    else:
-        return f'Ta {rdece(sladica)} ni prodana!'
-
 def zacetna_stran():
     print(logo(LOGO))
     print ()
@@ -131,7 +125,9 @@ def izberi_prodajo(prodaje):
     return izberi([(prodaja, prodaja)for prodaja in prodaje],)
 
 def neprodane_sladice():
-    for sladica  in slascicar.vse_sladice:
+    if len(slascicar.neprodane_sladice()) == 0:
+        raise ValueError('Vse sladice so že prodane!')
+    for sladica in slascicar.vse_sladice:
         if sladica.prodaja is None:
             print(f'{rdece(sladica.ime)}: {sladica.cena}€')
 
@@ -139,14 +135,21 @@ def izberi_neprodano_sladico(sladice):
     return izberi([(sladica, sladica) for sladica in sladice])
 
 def prodaj_sladico():
-    print('katero sladico ste prodali?')
+    if len(slascicar.neprodane_sladice()) == 0:
+        raise ValueError('Vse sladice so že prodane!')
+    print('katero sladico bi prodali?')
     sladica = izberi_neprodano_sladico(slascicar.neprodane_sladice())
     print('Na kaksen nacin ste prodali sladico?')
     nova_prodaja = izberi_prodajo(slascicar.prodaje)
     slascicar.prodaj_sladico(sladica, nova_prodaja)
+    print('Uspešno ste prodali sladico!')
 
 def vse_sladice():
-    print(slascicar.vse_sladice)
+    for sladica in slascicar.vse_sladice:
+        if sladica.prodaja is None:
+            print(f'{rdece(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}')
+        else:
+            print(f'{modro(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}') 
 
 def stanje_denarja():
     print(f'Skupni stroski so {slascicar.stroski_skupno()}€')
