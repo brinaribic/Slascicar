@@ -1,18 +1,15 @@
 import bottle
+from model import Uporabnik, Slascicar
 
-LOGO = '''
-_______  ___      _______  ______   ___   _  _______  _______  __    _  _______  ______  
-|       ||   |    |   _   ||      | |   | | ||       ||       ||  |  | ||       ||      | 
-|  _____||   |    |  |_|  ||  _    ||   |_| ||   _   ||  _____||   |_| ||    ___||  _    |
-| |_____ |   |    |       || | |   ||      _||  | |  || |_____ |       ||   |___ | | |   |
-|_____  ||   |___ |       || |_|   ||     |_ |  |_|  ||_____  ||  _    ||    ___|| |_|   |
- _____| ||       ||   _   ||       ||    _  ||       | _____| || | |   ||   |___ |       |
-|_______||_______||__| |__||______| |___| |_||_______||_______||_|  |__||_______||______| 
+DATOTEKA_S_SLADICAMI = 'stanje.json'
 
-'''
+try:
+    slascicar = Slascicar.nalozi_stanje(DATOTEKA_S_SLADICAMI)
+except FileNotFoundError:
+    slascicar = Slascicar()
 
 @bottle.get('/')
 def zacetna_stran():
-    return f'<pre>{LOGO}</pre>'
+    return bottle.template('osnovna_stran.html', slascicar=slascicar)
 
 bottle.run(debug=True, reloader=True)
