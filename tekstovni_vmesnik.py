@@ -52,26 +52,25 @@ def izberi(seznam):
 
 def prikaz_skupnega_dobicka(dobicek):
     if dobicek > 0:
-        return f'{modro(dobicek)} €'
+        return f'{modro(dobicek)}€'
     elif dobicek < 0:
-        return f'{rdece(dobicek)} €'
+        return f'{rdece(dobicek)}€'
     else:
-        return f'{dobicek} €'
+        return f'{dobicek}€'
 
 def zacetna_stran():
     print(logo(LOGO))
     print ()
-    print(krepko('Pozdravljeni v programu Sladkosned!'))
+    print(krepko('Dobrodošli v programu Sladkosned!'))
     print()
     print('Za izhod pritisnite Ctrl-C')
     print(80 * '=')
 
-
 def osnovne_meni():
-    print(prikaz_sladic())
-    print()
     while True:
         try:
+            print(prikaz_sladic())
+            print(80 * '=')
             print('Kaj bi radi naredili?')
             print()
             moznosti = [
@@ -95,18 +94,19 @@ def osnovne_meni():
             print(80 * '=')
         except KeyboardInterrupt:
             print()
-            print('Nasvidenje')
+            print('Nasvidenje!')
             break
 
 def prikaz_sladic():
-    for sladica in slascicar.prodane_sladice():
-        print(f'{modro(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}')
-    for sladica in slascicar.neprodane_sladice():
-        print(f'{rdece(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}')
-    print(f'Dobiček: {prikaz_skupnega_dobicka(slascicar.dobicek())}')  
-
+    for sladica in slascicar.vse_sladice:
+        if sladica.prodaja.vrsta  == 'prazno':
+            print(f'{rdece(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}')
+        else:
+            print(f'{modro(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}')
+    print(f'Dobicek: {prikaz_skupnega_dobicka(slascicar.dobicek())}')
+ 
 def dodaj_prodajo():
-    vrsta = input('Vnesite nacin prodaje sladice (npr. osebni prevzem, dostava na dom, ...)> ')
+    vrsta = input("Vnesite nacin prodaje sladice (npr. osebni prevzem,...), ce sladica ni prodana vnesite 'prazno'> ")
     slascicar.dodaj_prodajo(vrsta)
 
 def dodaj_strosek():
@@ -122,8 +122,8 @@ def dodaj_sladico():
     cena = vnesi_stevilo('Prodajna cena>')
     print('Izberite strosek:')
     strosek = izberi_strosek(slascicar.vsi_stroski)
-    print("Izberite na kaksen nacin ste prodali sladico. ce sladice se niste prodali, izberite moznost 'None'.")
-    prodaja = izberi_prodajo([None] + slascicar.prodaje)
+    print("Izberite na kaksen nacin ste prodali sladico.")
+    prodaja = izberi_prodajo(slascicar.prodaje)
     slascicar.dodaj_sladico(ime, datum, cena, strosek, prodaja)
     print('Sladica uspesno dodana!')
 
@@ -137,7 +137,7 @@ def neprodane_sladice():
     if len(slascicar.neprodane_sladice()) == 0:
         raise ValueError('Vse sladice so že prodane!')
     for sladica in slascicar.vse_sladice:
-        if sladica.prodaja is None:
+        if sladica.prodaja.vrsta == 'prazno':
             print(f'{rdece(sladica.ime)}: {sladica.cena}€')
 
 def izberi_neprodano_sladico(sladice):
@@ -155,7 +155,7 @@ def prodaj_sladico():
 
 def vse_sladice():
     for sladica in slascicar.vse_sladice:
-        if sladica.prodaja is None:
+        if sladica.prodaja.vrsta == 'prazno':
             print(f'{rdece(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}')
         else:
             print(f'{modro(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}') 

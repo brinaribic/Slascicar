@@ -7,23 +7,23 @@
             "vrsta": "dostava na dom"
         },
         {
-            "vrsta": "v gostilni"
+            "vrsta": "ni prodana"
         },
         {
-            "vrsta": ""
+            "vrsta": "prazno"
         }
     ],
     "stroski": [
         {
             "ime": "dodatni delavec",
-            "znesek": 2200
+            "znesek": 220
         },
         {
             "ime": "sestavine",
             "znesek": 20
         },
         {
-            "ime": "poštnina",
+            "ime": "postnina",
             "znesek": 10
         }
     ],
@@ -36,11 +36,32 @@
             "prodaja": "osebni prevzem"
         },
         {
+            "ime": "piskoti",
+            "datum": "2020-08-23",
+            "cena": 23,
+            "strosek": "postnina",
+            "prodaja": "ni prodana"
+        },
+        {
+            "ime": "brina",
+            "datum": "2020-08-23",
+            "cena": 400,
+            "strosek": "dodatni delavec",
+            "prodaja": "dostava na dom"
+        },
+        {
             "ime": "pana cota",
-            "datum": "2020-08-22",
-            "cena": 300,
-            "strosek": "sestavine",
-            "prodaja": null
+            "datum": "2020-08-23",
+            "cena": 4,
+            "strosek": "dodatni delavec",
+            "prodaja": "prazno"
+        },
+        {
+            "ime": "pana cota",
+            "datum": "2020-08-23",
+            "cena": 4,
+            "strosek": "postnina",
+            "prodaja": "ni prodana"
         }
     ]
 }
