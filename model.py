@@ -75,9 +75,6 @@ class Slascicar:
     def _preveri_strosek(self, strosek):
         if strosek.slascicar != self:
             raise ValueError(f'Strosek {strosek} ne spada v to slascicarno!')
-            
-    def odstrani_sladico(self, sladica):
-        return self.vse_sladice.remove(sladica)
 
     def poisci_prodajo(self, vrsta):
         return self._vrste_prodaj[vrsta]
@@ -111,6 +108,15 @@ class Slascicar:
         for sladica in self.neprodane_sladice():
             s[sladica] = sladica.cena
         return s
+
+    def prodaj_sladico(self, sladica, nova_prodaja):
+        self._preveri_prodajo(nova_prodaja)
+        if sladica in self.neprodane_sladice():
+            self.prodane_sladice().append(sladica)
+            self.neprodane_sladice().remove(sladica)
+            sladica.prodaja = nova_prodaja
+        else:
+            raise ValueError('Ta sladica je ze prodana!')  
 
     def prihodki(self):
         z = 0

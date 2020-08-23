@@ -82,7 +82,8 @@ def osnovne_meni():
                 ('dodaj prodajo', dodaj_prodajo),
                 ('dodaj strosek', dodaj_strosek),
                 ('dodaj sladico', dodaj_sladico),
-                ('poglej ne prodane sladice', neprodane_sladice),
+                ('poglej neprodane sladice', neprodane_sladice),
+                ('prodaj sladico', prodaj_sladico),
                 ('poglej vse sladice', vse_sladice),
                 ('poglej dobicek/skupne stroske', stanje_denarja),
             ]
@@ -134,8 +135,18 @@ def neprodane_sladice():
         if sladica.prodaja is None:
             print(f'{rdece(sladica.ime)}: {sladica.cena}€')
 
+def izberi_neprodano_sladico(sladice):
+    return izberi([(sladica, sladica) for sladica in sladice])
+
+def prodaj_sladico():
+    print('katero sladico ste prodali?')
+    sladica = izberi_neprodano_sladico(slascicar.neprodane_sladice())
+    print('Na kaksen nacin ste prodali sladico?')
+    nova_prodaja = izberi_prodajo(slascicar.prodaje)
+    slascicar.prodaj_sladico(sladica, nova_prodaja)
+
 def vse_sladice():
-    pass
+    print(slascicar.vse_sladice)
 
 def stanje_denarja():
     print(f'Skupni stroski so {slascicar.stroski_skupno()}€')
