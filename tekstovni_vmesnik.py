@@ -68,6 +68,8 @@ def zacetna_stran():
 
 
 def osnovne_meni():
+    print(prikaz_sladic())
+    print()
     while True:
         try:
             print('Kaj bi radi naredili?')
@@ -95,6 +97,13 @@ def osnovne_meni():
             print()
             print('Nasvidenje')
             break
+
+def prikaz_sladic():
+    for sladica in slascicar.prodane_sladice():
+        print(f'{modro(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}')
+    for sladica in slascicar.neprodane_sladice():
+        print(f'{rdece(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}')
+    print(f'Dobiček: {prikaz_skupnega_dobicka(slascicar.dobicek())}')  
 
 def dodaj_prodajo():
     vrsta = input('Vnesite nacin prodaje sladice (npr. osebni prevzem, dostava na dom, ...)> ')
@@ -154,6 +163,7 @@ def vse_sladice():
 def stanje_denarja():
     print(f'Skupni stroski so {slascicar.stroski_skupno()}€')
     print(f'Vas dobicek je {prikaz_skupnega_dobicka(slascicar.dobicek())}')
+
 
 zacetna_stran()
 osnovne_meni()
