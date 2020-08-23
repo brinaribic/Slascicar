@@ -228,3 +228,6 @@ class Sladica:
     def __repr__(self):
         return f'{self.ime}'
 
+    def __lt__(self, datum1, datum2):
+        return datum1 < datum2
+
