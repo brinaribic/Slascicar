@@ -1,0 +1,8 @@
+<label for="{{id}}">{{oznaka}}:</label>
+
+<select name="{{id}}" id="{{id}}">
+    <option disabled selected value> -- izberi prodajo-- </option>
+    % for prodaja in slascicar.prodaje:
+    <option value="{{prodaja.vrsta}}">{{prodaja.vrsta}}</option>
+    % end
+</select>

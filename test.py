@@ -19,11 +19,4 @@ makroni = slascicar.dodaj_sladico('makroni', date(2020, 7, 19), 10, dodatni_dela
 
 torta = slascicar.dodaj_sladico('cokoladna_torta', date(2020, 6, 12), 100, sestavine, niprodano)
 
-print(slascicar._vrste_prodaj)
-
-print(slascicar.prihodki())
-
-print(slascicar.dobicek())
-
-print(slascicar.neprodane_sladice())
-
+print(slascicar.poisci_sladico('makroni'))

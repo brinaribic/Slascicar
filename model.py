@@ -35,11 +35,11 @@ class Slascicar:
         self.prodaje = []
         self.vsi_stroski = []
         self.vse_sladice = []
-        self._imena_prodajanih_sladic = []
         self._vrste_prodaj = {}
-        self._sladice_prodaje = {}
+        #self._sladice_prodaje = {}
         self._imena_stroskov = {}
-        self._sladice_stroski = {}
+        #self._sladice_stroski = {}
+        self._imena_sladic = {}
         
     def dodaj_prodajo(self, vrsta):
         if vrsta in self._vrste_prodaj:
@@ -47,7 +47,7 @@ class Slascicar:
         nova_prodaja = Prodaja(vrsta, self)
         self.prodaje.append(nova_prodaja)
         self._vrste_prodaj[vrsta] = nova_prodaja
-        self._sladice_prodaje[nova_prodaja] = []
+        #self._sladice_prodaje[nova_prodaja] = []
         return nova_prodaja
 
     def dodaj_strosek(self, ime, strosek):
@@ -56,7 +56,7 @@ class Slascicar:
         nov_strosek = Strosek(ime, strosek, self)
         self.vsi_stroski.append(nov_strosek)
         self._imena_stroskov[ime] = nov_strosek
-        self._sladice_stroski[nov_strosek] = []
+        #self._sladice_stroski[nov_strosek] = []
         return nov_strosek
 
     def dodaj_sladico(self, ime, datum, cena, strosek, prodaja):
@@ -64,8 +64,9 @@ class Slascicar:
         self._preveri_strosek(strosek)          
         nova_sladica = Sladica(ime, datum, cena, strosek, prodaja)
         self.vse_sladice.append(nova_sladica)
-        self._sladice_stroski[strosek].append(nova_sladica)
-        self._sladice_prodaje[prodaja].append(nova_sladica)
+        self._imena_sladic[ime] = nova_sladica
+        #self._sladice_stroski[strosek].append(nova_sladica)
+        #self._sladice_prodaje[prodaja].append(nova_sladica)
         return nova_sladica
 
     def _preveri_prodajo(self, prodaja):
@@ -82,6 +83,9 @@ class Slascicar:
     def poisci_strosek(self, ime):
         return self._imena_stroskov[ime]
 
+    def poisci_sladico(self, ime):
+        return self._imena_sladic[ime]
+
     def sladice_po_prodajah(self, prodaja):
         yield from self._vrste_prodaj[prodaja]
 
@@ -92,8 +96,7 @@ class Slascicar:
         prodane_sladice = []
         for sladica in self.vse_sladice:
             if sladica.prodaja.vrsta != 'prazno':
-                prodane_sladice.append(sladica)
-                self._imena_prodajanih_sladic.append(sladica.ime)  
+                prodane_sladice.append(sladica) 
         return prodane_sladice
 
     def neprodane_sladice(self):
@@ -204,7 +207,7 @@ class Strosek:
 
     def __init__(self, ime, znesek, slascicar):
         self.ime = ime # npr. cena sestavin, postnina(prodaja po posti), dodatni delavec, ...
-        self.znesek = int(znesek)
+        self.znesek = znesek
         self.slascicar = slascicar
 
     def __str__(self):

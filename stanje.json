@@ -7,9 +7,6 @@
             "vrsta": "dostava na dom"
         },
         {
-            "vrsta": "ni prodana"
-        },
-        {
             "vrsta": "prazno"
         }
     ],
@@ -36,13 +33,6 @@
             "prodaja": "osebni prevzem"
         },
         {
-            "ime": "piskoti",
-            "datum": "2020-08-23",
-            "cena": 23,
-            "strosek": "postnina",
-            "prodaja": "ni prodana"
-        },
-        {
             "ime": "brina",
             "datum": "2020-08-23",
             "cena": 400,
@@ -55,13 +45,6 @@
             "cena": 4,
             "strosek": "dodatni delavec",
             "prodaja": "prazno"
-        },
-        {
-            "ime": "pana cota",
-            "datum": "2020-08-23",
-            "cena": 4,
-            "strosek": "postnina",
-            "prodaja": "ni prodana"
         }
     ]
 }
