@@ -61,7 +61,7 @@ class Slascicar:
 
     def dodaj_sladico(self, ime, datum, cena, strosek, prodaja):
         self._preveri_prodajo(prodaja)
-        self._preveri_strosek(strosek)          
+        self._preveri_strosek(strosek)         
         nova_sladica = Sladica(ime, datum, cena, strosek, prodaja)
         self.vse_sladice.append(nova_sladica)
         self._imena_sladic[ime] = nova_sladica
@@ -70,7 +70,7 @@ class Slascicar:
         return nova_sladica
 
     def _preveri_prodajo(self, prodaja):
-        if prodaja is not None and prodaja.slascicar != self:
+        if prodaja.slascicar != self:
             raise ValueError(f'Prodaja {prodaja} ne spada v to slascicarno!')
 
     def _preveri_strosek(self, strosek):
@@ -105,12 +105,7 @@ class Slascicar:
             if sladica not in self.prodane_sladice():
                 neprodane.append(sladica)
         return neprodane
-
-    def neprodane_sladice_cena(self):
-        s = {}
-        for sladica in self.neprodane_sladice():
-            s[sladica] = sladica.cena
-        return s
+          
 
     def prodaj_sladico(self, sladica, nova_prodaja):
         self._preveri_prodajo(nova_prodaja)
@@ -119,7 +114,7 @@ class Slascicar:
             self.neprodane_sladice().remove(sladica)
             sladica.prodaja = nova_prodaja
         else:
-            raise ValueError('Ta sladica je ze prodana!')  
+            raise ValueError('Ta sladica je ze prodana!') 
 
     def prihodki(self):
         z = 0
@@ -137,15 +132,19 @@ class Slascicar:
     def dobicek(self):
         return int(self.prihodki() - self.stroski_skupno())
 
-    def najbolj_prodajana_sladica(self):
-        s = {}
-        for sladica in self.prodane_sladice():
-            if sladica not in s.values():
-                s[sladica] = 1
-            else:
-                s[sladica] = s.get(sladica) + 1
-        return max(s.values())
-  
+    def najpogostejsa_prodaja(self):
+        s = [sladica.prodaja.vrsta for sladica in self.vse_sladice]
+        return max(set(s), key = s.count)
+
+    def najvecji_stroski(self):
+        return max(set(strosek.znesek for strosek in self.vsi_stroski))
+
+    def najdrazja_sladica(self):
+        m = max(set(sladica.cena for sladica in self.vse_sladice))
+        for sladica in self.vse_sladice:
+            if m == sladica.cena:
+                return sladica
+        
     def slovar_sladic(self):
         return {
             'prodaje': [{
@@ -221,7 +220,7 @@ class Sladica:
     def __init__(self, ime, datum, cena, strosek, prodaja):
         self.ime = ime
         self.datum = datum
-        self.cena = cena
+        self.cena = cena 
         self.strosek = strosek
         self.prodaja = prodaja
 
