@@ -58,6 +58,12 @@ def prikaz_skupnega_dobicka(dobicek):
     else:
         return f'{dobicek}€'
 
+def prikaz_sladice(sladica):
+    if sladica in slascicar.prodane_sladice():
+        return f'{modro(sladica)}'
+    else:
+        return f'{rdece(sladica)}'
+
 def zacetna_stran():
     print(logo(LOGO))
     print ()
@@ -80,7 +86,7 @@ def osnovne_meni():
                 ('poglej neprodane sladice', neprodane_sladice),
                 ('prodaj sladico', prodaj_sladico),
                 ('poglej vse sladice', vse_sladice),
-                ('poglej dobicek/skupne stroske', stanje_denarja),
+                ('poglej stanje', stanje),
             ]
             izbira = izberi(moznosti)
             izbira()
@@ -160,9 +166,13 @@ def vse_sladice():
         else:
             print(f'{modro(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}') 
 
-def stanje_denarja():
+def stanje():
     print(f'Skupni stroski so {slascicar.stroski_skupno()}€')
     print(f'Vas dobicek je {prikaz_skupnega_dobicka(slascicar.dobicek())}')
+    print(f'Skupni prihodki so {slascicar.prihodki()}€')
+    print(f'Najpogostejša prodaja je {slascicar.najpogostejsa_prodaja()}')
+    print(f'Največji strošek je {slascicar.najvecji_stroski()}€')
+    print(f'Najdrazja sladica je {prikaz_sladice(slascicar.najdrazja_sladica())}')
 
 
 zacetna_stran()

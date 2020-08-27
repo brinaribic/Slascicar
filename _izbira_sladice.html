@@ -1,7 +1,7 @@
 <label for="{{id}}">{{oznaka}}:</label>
 
 <select name="{{id}}" id="{{id}}">
-    <option disabled selected value> -- izberi neprodano sladico-- </option>
+    <option disabled selected value> -- izberi sladico --</option>
     % for sladica in slascicar.neprodane_sladice():
     <option value="{{sladica.ime}}">{{sladica.ime}}</option>
     % end

@@ -1,0 +1,81 @@
+<h1>Trenutno stanje</h1>
+
+<h1>Prodaja</h1>
+<ul>
+    % for prodaja in slascicar.prodaje:
+    <li>
+        {{prodaja.vrsta}}
+    </li>
+    %end
+    <li>
+        <form action="/dodaj-prodajo/" method="POST">
+            <label for="vrsta">Prodaja </label>: 
+            <input type="text" id="vrsta" name="vrsta">
+            <input type="submit" value="Dodaj prodajo!">
+        </form>
+    </li>
+</ul>
+<h4>
+    Najpogostejša prodaja je {{slascicar.najpogostejsa_prodaja()}}.
+</h4>
+<h1>Stroški</h1>
+<ul>
+    % for strosek in slascicar.vsi_stroski:
+    <li>
+        {{strosek.ime}}: {{strosek.znesek}}€
+    </li>
+    %end
+    <li>
+        <form action="/dodaj-strosek/" method="POST">
+            <label for="ime">Strošek </label>: 
+            <input type="text" id="ime" name="ime">
+            <label for="znesek">Znesek: </label>: 
+            <input type="text" id="znesek" name="znesek">
+            <input type="submit" value="Dodaj strošek!">
+        </form>
+    </li>
+</ul>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+</style>
+<table>
+    <thead>
+        <th>Sladica</th>
+        <th>Datum</th>
+        <th>Cena</th>
+        <th>Stroški</th>
+        <th>Prodaja</th>
+    </thead>
+    <tbody>
+        % for sladica in slascicar.vse_sladice:
+        <tr>
+            <td>{{sladica.ime}}</td>
+            <td>{{sladica.datum}}</td>
+            <td>{{sladica.cena}}€</td>
+            <td>{{sladica.strosek}}</td>
+            <td>{{sladica.prodaja}}</td>
+        </tr>
+        %end
+    </tbody>
+</table>
+
+<h2>Dodaj sladico:</h2>
+<form action="/dodaj-sladico/" method="POST">
+    <label for="ime">Sladica</label>: 
+    <input type="text" id="ime" name="ime">
+    <label for="cena">Cena</label>: 
+    <input type="text" id="cena" name="cena">
+    % include('_izbira_stroskov.html', id='strosek', oznaka='Strosek')
+    % include('_izbira_prodaje.html', id='prodaja', oznaka='Prodaja')
+    <input type="submit" value="Dodaj sladico!">
+</form>

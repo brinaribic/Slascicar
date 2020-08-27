@@ -8,6 +8,9 @@
     |_______||_______||__| |__||______| |___| |_||_______||_______||_|  |__||_______||______| 
 </pre>
 </h2>
+<h1>Dobiček: {{slascicar.dobicek()}}€</h1>
+<h2>Prihodki: {{slascicar.prihodki()}}€</h2>
+<h2>Stroški skupno: {{slascicar.stroski_skupno()}}€</h2>
 <h1>Prodane sladice</h1>
 <ul>
     % for sladica in slascicar.prodane_sladice():
@@ -15,6 +18,7 @@
         {{sladica.ime}}: {{sladica.cena}}€
     </li>
     %end
+    </li>
 </ul>
 <h1>Neprodane sladice</h1>
 <ul>
@@ -23,57 +27,25 @@
         {{sladica.ime}}: {{sladica.cena}}€       
     </li>
     %end
-</ul>
-
-<h1>Prodaja</h1>
-<ul>
-    % for prodaja in slascicar.prodaje:
-    <li>
-        {{prodaja.vrsta}}
+    <form action="/prodaj-sladico/" method="POST">
+        % include('_izbira_sladice.html', id='sladica', oznaka='Sladica')
+         % include('_izbira_prodaje.html', id='prodaja', oznaka='Prodaja')
+        <input type="submit" value="Prodaj!">
+    </form> 
     </li>
-    %end
 </ul>
 
-<h1>Stroški</h1>
-<ul>
-    % for strosek in slascicar.vsi_stroski:
-    <li>
-        {{strosek.ime}}: {{strosek.znesek}}€
-    </li>
-    %end
-</ul>
-
-<h1>Dobiček: {{slascicar.dobicek()}}€</h1>
-<h2>Prihodki: {{slascicar.prihodki()}}€</h2>
-<h2>Stroški skupno: {{slascicar.stroski_skupno()}}€</h2>
-
-<form action="/dodaj-prodajo/" method="POST">
-    <label for="vrsta">Prodaja </label>: 
-    <input type="text" id="vrsta" name="vrsta">
-    <input type="submit" value="Dodaj prodajo!">
+<form action="/stanje/" method="GET">
+    <input type="submit" value="Poglej stanje!">
 </form>
 
-<form action="/dodaj-strosek/" method="POST">
-    <label for="ime">Strošek </label>: 
-    <input type="text" id="ime" name="ime">
-    <label for="znesek">Znesek: </label>: 
-    <input type="text" id="znesek" name="znesek">
-    <input type="submit" value="Dodaj strošek!">
-</form>
 
-<form action="/prodaj-sladico/" method="POST">
-    % include('_izbira_sladice.html', id='sladica', oznaka='Sladica')
-    % include('_izbira_prodaje.html', id='prodaja', oznaka='Prodaja')
-    <input type="submit" value="Prodaj!">
-</form> 
 
-<form action="/dodaj-sladico/" method="POST">
-    <label for="ime">Sladica</label>: 
-    <input type="text" id="ime" name="ime">
-    <label for="cena">Cena</label>: 
-    <input type="text" id="cena" name="cena">
-    % include('_izbira_stroskov.html', id='strosek', oznaka='Strosek')
-    % include('_izbira_prodaje.html', id='prodaja', oznaka='Prodaja')
-    <input type="submit" value="Dodaj sladico!">
-</form
+
+
+
+
+
+
+
 
