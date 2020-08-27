@@ -134,10 +134,16 @@ class Slascicar:
 
     def najpogostejsa_prodaja(self):
         s = [sladica.prodaja.vrsta for sladica in self.vse_sladice]
-        return max(set(s), key = s.count)
+        if s == []:
+            pass
+        else:
+            return max(set(s), key = s.count)
 
     def najvecji_stroski(self):
-        return max(set(strosek.znesek for strosek in self.vsi_stroski))
+        if set(strosek.znesek for strosek in self.vsi_stroski) == set():
+            pass
+        else:
+            return max(set(strosek.znesek for strosek in self.vsi_stroski))
 
     def najdrazja_sladica(self):
         m = max(set(sladica.cena for sladica in self.vse_sladice))
