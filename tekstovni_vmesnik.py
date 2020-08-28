@@ -106,9 +106,9 @@ def osnovne_meni():
 def prikaz_sladic():
     for sladica in slascicar.vse_sladice:
         if sladica.prodaja.vrsta  == 'prazno':
-            print(f'{rdece(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}')
+            print(f'{rdece(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}, kolicina {sladica.kolicina}')
         else:
-            print(f'{modro(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}')
+            print(f'{modro(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}, kolicina {sladica.kolicina}')
     print(f'Dobicek: {prikaz_skupnega_dobicka(slascicar.dobicek())}')
  
 def dodaj_prodajo():
@@ -130,7 +130,8 @@ def dodaj_sladico():
     strosek = izberi_strosek(slascicar.vsi_stroski)
     print("Izberite na kaksen nacin ste prodali sladico.")
     prodaja = izberi_prodajo(slascicar.prodaje)
-    slascicar.dodaj_sladico(ime, datum, cena, strosek, prodaja)
+    kolicina = vnesi_stevilo('Količina>')
+    slascicar.dodaj_sladico(ime, datum, cena, strosek, prodaja, kolicina)
     print('Sladica uspesno dodana!')
 
 def izberi_strosek(stroski):
@@ -154,9 +155,10 @@ def prodaj_sladico():
         raise ValueError('Vse sladice so že prodane!')
     print('katero sladico bi prodali?')
     sladica = izberi_neprodano_sladico(slascicar.neprodane_sladice())
-    print('Na kaksen nacin ste prodali sladico?')
+    print('Na kaksen nacin bi prodali sladico?')
     nova_prodaja = izberi_prodajo(slascicar.prodaje)
-    slascicar.prodaj_sladico(sladica, nova_prodaja)
+    kolicina = vnesi_stevilo('Koliko sladic bi prodali?>')
+    slascicar.prodaj_sladico(sladica, nova_prodaja, kolicina)
     print('Uspešno ste prodali sladico!')
 
 def vse_sladice():

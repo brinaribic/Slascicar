@@ -13,7 +13,7 @@
     "stroski": [
         {
             "ime": "dodatni delavec",
-            "znesek": 220
+            "znesek": 22
         },
         {
             "ime": "sestavine",
@@ -26,25 +26,36 @@
     ],
     "sladice": [
         {
-            "ime": "torta",
+            "ime": "mafini",
             "datum": "2020-08-22",
             "cena": 60,
             "strosek": "dodatni delavec",
-            "prodaja": "osebni prevzem"
+            "prodaja": "osebni prevzem",
+            "kolicina": 5
         },
         {
-            "ime": "brina",
+            "ime": "torta",
             "datum": "2020-08-23",
-            "cena": 400,
+            "cena": 40,
             "strosek": "dodatni delavec",
-            "prodaja": "dostava na dom"
+            "prodaja": "dostava na dom",
+            "kolicina": 10
         },
         {
             "ime": "pana cota",
             "datum": "2020-08-23",
             "cena": 4,
             "strosek": "dodatni delavec",
-            "prodaja": "prazno"
+            "prodaja": "prazno",
+            "kolicina": 2
+        },
+        {
+            "ime": "pana cota",
+            "datum": "2020-08-23",
+            "cena": 4,
+            "strosek": "dodatni delavec",
+            "prodaja": "dostava na dom",
+            "kolicina": 2
         }
     ]
 }

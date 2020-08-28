@@ -59,10 +59,10 @@ class Slascicar:
         #self._sladice_stroski[nov_strosek] = []
         return nov_strosek
 
-    def dodaj_sladico(self, ime, datum, cena, strosek, prodaja):
+    def dodaj_sladico(self, ime, datum, cena, strosek, prodaja, kolicina):
         self._preveri_prodajo(prodaja)
         self._preveri_strosek(strosek)         
-        nova_sladica = Sladica(ime, datum, cena, strosek, prodaja)
+        nova_sladica = Sladica(ime, datum, cena, strosek, prodaja, kolicina)
         self.vse_sladice.append(nova_sladica)
         self._imena_sladic[ime] = nova_sladica
         #self._sladice_stroski[strosek].append(nova_sladica)
@@ -102,17 +102,28 @@ class Slascicar:
     def neprodane_sladice(self):
         neprodane = []
         for sladica in self.vse_sladice:
-            if sladica not in self.prodane_sladice():
+            if sladica.prodaja.vrsta == 'prazno':
                 neprodane.append(sladica)
         return neprodane
           
-
-    def prodaj_sladico(self, sladica, nova_prodaja):
+    def prodaj_sladico(self, sladica, nova_prodaja, kolicina):
         self._preveri_prodajo(nova_prodaja)
-        if sladica in self.neprodane_sladice():
-            self.prodane_sladice().append(sladica)
-            self.neprodane_sladice().remove(sladica)
-            sladica.prodaja = nova_prodaja
+        if kolicina > sladica.kolicina or kolicina < 1:
+            raise ValueError('Toliko sladice ne morete prodati!')
+        elif sladica in self.neprodane_sladice():
+            neprodana_kolicina = sladica.kolicina - kolicina
+            if neprodana_kolicina != 0:
+                self.vse_sladice.remove(sladica)
+                neprodana_sladica = Sladica(sladica.ime, sladica.datum, sladica.cena, sladica.strosek, sladica.prodaja, neprodana_kolicina)
+                self.vse_sladice.append(neprodana_sladica)
+                self.neprodane_sladice().append(neprodana_sladica)
+                prodana_sladica = Sladica(sladica.ime, sladica.datum, sladica.cena, sladica.strosek, nova_prodaja, kolicina)
+                self.vse_sladice.append(prodana_sladica)
+                self.prodane_sladice().append(prodana_sladica)
+            else:
+                 self.neprodane_sladice().remove(sladica)
+                 self.prodane_sladice().append(sladica)
+                 sladica.prodaja = nova_prodaja
         else:
             raise ValueError('Ta sladica je ze prodana!') 
 
@@ -120,13 +131,13 @@ class Slascicar:
         z = 0
         for sladica in self.vse_sladice:
             if sladica in self.prodane_sladice():
-                z += int(sladica.cena)
+                z += int(sladica.cena * sladica.kolicina)
         return z
 
     def stroski_skupno(self):
         z = 0
         for sladica in self.prodane_sladice():
-            z += int(sladica.strosek.znesek)
+            z += int(sladica.strosek.znesek * sladica.kolicina)
         return z
     
     def dobicek(self):
@@ -166,6 +177,7 @@ class Slascicar:
                 'cena': sladica.cena,
                 'strosek': sladica.strosek.ime,
                 'prodaja': sladica.prodaja.vrsta,
+                'kolicina': sladica.kolicina,
             } for sladica in self.vse_sladice],
         }
 
@@ -183,6 +195,7 @@ class Slascicar:
                 sladica['cena'],
                 slascicar._imena_stroskov[sladica['strosek']],
                 slascicar._vrste_prodaj[sladica['prodaja']],
+                sladica['kolicina'],
             )
         return slascicar
     
@@ -212,7 +225,7 @@ class Strosek:
 
     def __init__(self, ime, znesek, slascicar):
         self.ime = ime # npr. cena sestavin, postnina(prodaja po posti), dodatni delavec, ...
-        self.znesek = znesek
+        self.znesek = int(znesek)
         self.slascicar = slascicar
 
     def __str__(self):
@@ -223,12 +236,13 @@ class Strosek:
 
 class Sladica:
 
-    def __init__(self, ime, datum, cena, strosek, prodaja):
+    def __init__(self, ime, datum, cena, strosek, prodaja, kolicina):
         self.ime = ime
         self.datum = datum
         self.cena = cena 
         self.strosek = strosek
         self.prodaja = prodaja
+        self.kolicina = int(kolicina)
 
     def __str__(self):
         return f'{self.ime}'

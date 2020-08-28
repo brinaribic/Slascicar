@@ -10,10 +10,13 @@ niprodano = slascicar.dodaj_prodajo('prazno')
 sestavine = slascicar.dodaj_strosek('sestavine', 20)
 dodatni_delavec = slascicar.dodaj_strosek('dodatni_delavec', 50)
 
-torta = slascicar.dodaj_sladico('torta', date.today(), 50, sestavine, niprodano)
-mafini = slascicar.dodaj_sladico('mafini', date.today(), 10, sestavine, osebno)
-makroni = slascicar.dodaj_sladico('makroni', date.today(), 10, sestavine, osebno)
+torta = slascicar.dodaj_sladico('torta', date.today(), 50, sestavine, niprodano, 5)
+mafini = slascicar.dodaj_sladico('mafini', date.today(), 10, sestavine, osebno, 10)
+makroni = slascicar.dodaj_sladico('makroni', date.today(), 10, sestavine, osebno, 20)
 
-print(slascicar.najpogostejsa_prodaja())
-print(slascicar.najpogostejsi_stroski())
-print(slascicar.najvecji_stroski())
+slascicar.prodaj_sladico(torta, osebno, 3)
+
+print(slascicar.prodane_sladice())
+
+print(slascicar.neprodane_sladice())
+
