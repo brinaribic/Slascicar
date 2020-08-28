@@ -1,34 +1,5 @@
 import json
 
-class Uporabnik:
-
-    def __init__(self, uporabnisko_ime, zasifrirano_geslo, slascicar):
-        self.uporabnisko_ime = uporabnisko_ime
-        self.zasifrirano_geslo = zasifrirano_geslo
-        self.slascicar = slascicar
-    
-    def preveri_geslo(self, zasifrirano_geslo):
-        if self.zasifrirano_geslo != zasifrirano_geslo:
-            raise ValueError('Geslo je napacno!')
-    
-    def shrani_stanje(self, ime_datoteke):
-        slovar_s_sladicami = {
-            'uporabnisko_ime': self.uporabnisko_ime,
-            'zasifrirano_geslo': self.zasifrirano_geslo,
-            'slascicar': self.slascicar.slovar_sladic(),
-        }
-        with open(ime_datoteke, 'w') as datoteka:
-            json.dump(slovar_s_sladicami, datoteka, ensure_ascii=False, indent=4)
-    
-    @classmethod
-    def nalozi_stanje(cls, ime_datoteke):
-        with open(ime_datoteke) as datoteka:
-            slovar_s_sladicami = json.load(datoteka)
-        uporabnisko_ime = slovar_s_sladicami['uporabnisko_ime']
-        zasifrirano_geslo = slovar_s_sladicami['zasifrirano_geslo']
-        slascicar = Slascicar.nalozi_iz_slovarja(slovar_s_sladicami['slascicar'])
-        return cls(uporabnisko_ime, zasifrirano_geslo, slascicar)
-
 class Slascicar:
 
     def __init__(self):
@@ -36,9 +7,7 @@ class Slascicar:
         self.vsi_stroski = []
         self.vse_sladice = []
         self._vrste_prodaj = {}
-        #self._sladice_prodaje = {}
         self._imena_stroskov = {}
-        #self._sladice_stroski = {}
         self._imena_sladic = {}
         
     def dodaj_prodajo(self, vrsta):
@@ -47,7 +16,6 @@ class Slascicar:
         nova_prodaja = Prodaja(vrsta, self)
         self.prodaje.append(nova_prodaja)
         self._vrste_prodaj[vrsta] = nova_prodaja
-        #self._sladice_prodaje[nova_prodaja] = []
         return nova_prodaja
 
     def dodaj_strosek(self, ime, strosek):
@@ -56,7 +24,6 @@ class Slascicar:
         nov_strosek = Strosek(ime, strosek, self)
         self.vsi_stroski.append(nov_strosek)
         self._imena_stroskov[ime] = nov_strosek
-        #self._sladice_stroski[nov_strosek] = []
         return nov_strosek
 
     def dodaj_sladico(self, ime, datum, cena, strosek, prodaja, kolicina):
@@ -65,8 +32,6 @@ class Slascicar:
         nova_sladica = Sladica(ime, datum, cena, strosek, prodaja, kolicina)
         self.vse_sladice.append(nova_sladica)
         self._imena_sladic[ime] = nova_sladica
-        #self._sladice_stroski[strosek].append(nova_sladica)
-        #self._sladice_prodaje[prodaja].append(nova_sladica)
         return nova_sladica
 
     def _preveri_prodajo(self, prodaja):
@@ -114,10 +79,20 @@ class Slascicar:
             neprodana_kolicina = sladica.kolicina - kolicina
             if neprodana_kolicina != 0:
                 self.vse_sladice.remove(sladica)
-                neprodana_sladica = Sladica(sladica.ime, sladica.datum, sladica.cena, sladica.strosek, sladica.prodaja, neprodana_kolicina)
+                neprodana_sladica = Sladica(
+                    sladica.ime, sladica.datum, 
+                    sladica.cena, 
+                    sladica.strosek, 
+                    sladica.prodaja, 
+                    neprodana_kolicina)
                 self.vse_sladice.append(neprodana_sladica)
                 self.neprodane_sladice().append(neprodana_sladica)
-                prodana_sladica = Sladica(sladica.ime, sladica.datum, sladica.cena, sladica.strosek, nova_prodaja, kolicina)
+                prodana_sladica = Sladica(sladica.ime, 
+                    sladica.datum, 
+                    sladica.cena, 
+                    sladica.strosek, 
+                    nova_prodaja, 
+                    kolicina)
                 self.vse_sladice.append(prodana_sladica)
                 self.prodane_sladice().append(prodana_sladica)
             else:
@@ -185,9 +160,9 @@ class Slascicar:
     def nalozi_iz_slovarja(cls, slovar_sladic):
         slascicar = cls()
         for prodaja in slovar_sladic['prodaje']:
-            dodaj_prodajo = slascicar.dodaj_prodajo(prodaja['vrsta'])
+            slascicar.dodaj_prodajo(prodaja['vrsta'])
         for strosek in slovar_sladic['stroski']:
-            dodaj_strosek = slascicar.dodaj_strosek(strosek['ime'], strosek['znesek'])
+            slascicar.dodaj_strosek(strosek['ime'], strosek['znesek'])
         for sladica in slovar_sladic['sladice']:
             slascicar.dodaj_sladico(
                 sladica['ime'],
@@ -212,7 +187,7 @@ class Slascicar:
 class Prodaja:
 
     def __init__(self, vrsta, slascicar):
-        self.vrsta = vrsta #po posti, osebno, ...
+        self.vrsta = vrsta 
         self.slascicar = slascicar
         
     def __str__(self):
@@ -224,7 +199,7 @@ class Prodaja:
 class Strosek:
 
     def __init__(self, ime, znesek, slascicar):
-        self.ime = ime # npr. cena sestavin, postnina(prodaja po posti), dodatni delavec, ...
+        self.ime = ime
         self.znesek = int(znesek)
         self.slascicar = slascicar
 
@@ -252,4 +227,3 @@ class Sladica:
 
     def __lt__(self, other):
         return self.datum < other.datum
-
