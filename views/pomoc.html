@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<ul class="nav justify-content-end">
+    <li class="nav-item">
+        <form action="/stanje/" method="GET">
+            <button type="submit" class="btn-danger btn-sm">
+                Osebna beležka
+            </button>
+        </form>
+    </li>
+    <li class="nav-item">
+        <form action="/analiza_podatkov/" method="GET">
+            <button type="submit" class="btn-danger btn-sm">
+                Analiza podatkov
+            </button>
+        </form>
+    </li>
+    <li class="nav-item">
+        <form action="/pomoc/" method="GET" class="nav-link disabled">
+            <button type="submit" class="btn-danger btn-sm">
+                Pomoč!
+            </button>
+        </form>
+    </li>
+  </ul>
+
+<h1 class="title text-danger"> Pomoč pri uporabi programa</h1>
+<h2 class="subtitle text-secondary">Tukaj se lahko uporabnik bolje seznani z vsemi možnostmi programa.</h2>
+
+<p>
+    Program je namenjen slaščičarjem oz. vsem, ki prodajajo sladice. 
+    Po prijavi se uporabniku odpre <strong>"Osebna beležka"</strong>, v kateri lahko vidi vse sladice, vrste prodaj ter stroške. 
+    Če želi uporabnik natačnejšo analizo, odpre zavihek <strong>"Analiza podatkov"</strong>.
+</p>
+<p>
+    V <i>osebni beležki</i> lahko uporabnik doda nove stroške in vrste prodaj. 
+    Doda lahko tudi sladico, bodisi prodano bodisi neprodano. 
+    Pri vnosu nove sladice, mora poleg imena sladice dodati tudi datum (kdaj je bila sladica narejena),
+    ceno ene enote (npr. ene torte), strošek, ki naj bo preračunan na eno enoto dodane sladice, prodajo ter količino. 
+    Če želi uporabnik dodati neprodano sladico, mora najprej dodati prodajo "<u>neprodano</u>".
+    Če doda neprodano sladico, jo lahko tudi kasneje "proda", tako da vnese na kakšen način jo je prodal in količino.
+</p>
+<p>
+    V <i>analizi podatkov</i> uporabnik posebej vidi vse prodane in neprodane sladice. Vidi tudi najdražjo sladico, 
+    najpogostejšo prodajo ter največje stroške.
+</p>

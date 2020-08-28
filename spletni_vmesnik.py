@@ -36,10 +36,15 @@ def osnovna_stran():
 def pomoc():
     return bottle.template('pomoc.html')
 
+@bottle.get('/analiza_podatkov/')
+def analiza_podatkov():
+    slascicar = trenutni_uporbnik()
+    return bottle.template('analiza_podatkov.html', slascicar=slascicar)
+
 @bottle.get('/stanje/')
 def stran_s_stanjem():
     slascicar = trenutni_uporbnik()
-    return bottle.template('naslednja_stran.html', slascicar=slascicar)
+    return bottle.template('izboljsana_stran.html', slascicar=slascicar)
 
 @bottle.post('/dodaj-prodajo/')
 def dodaj_prodajo():
