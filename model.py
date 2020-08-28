@@ -76,9 +76,9 @@ class Slascicar:
         if kolicina > sladica.kolicina or kolicina < 1:
             raise ValueError('Toliko sladice ne morete prodati!')
         elif sladica in self.neprodane_sladice():
+            self.vse_sladice.remove(sladica)
             neprodana_kolicina = sladica.kolicina - kolicina
             if neprodana_kolicina != 0:
-                self.vse_sladice.remove(sladica)
                 neprodana_sladica = Sladica(
                     sladica.ime, sladica.datum, 
                     sladica.cena, 
@@ -96,9 +96,8 @@ class Slascicar:
                 self.vse_sladice.append(prodana_sladica)
                 self.prodane_sladice().append(prodana_sladica)
             else:
-                 self.neprodane_sladice().remove(sladica)
-                 self.prodane_sladice().append(sladica)
-                 sladica.prodaja = nova_prodaja
+                self.prodane_sladice().append(sladica)
+                sladica.prodaja = nova_prodaja
         else:
             raise ValueError('Ta sladica je ze prodana!') 
 
@@ -220,10 +219,10 @@ class Sladica:
         self.kolicina = int(kolicina)
 
     def __str__(self):
-        return f'{self.ime}'
+        return f'{self.ime}: {self.kolicina}'
 
     def __repr__(self):
-        return f'{self.ime}'
+        return f'{self.ime}: {self.kolicina}'
 
     def __lt__(self, other):
         return self.datum < other.datum
