@@ -1,0 +1,6 @@
+<select class="form-control" name="{{id}}" id="{{id}}">
+    <option disabled selected value> Strošek </option>
+    % for strosek in slascicar.vsi_stroski:
+    <option value="{{strosek.ime}}">{{strosek.ime}}</option>
+    % end
+</select>

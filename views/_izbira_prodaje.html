@@ -1,0 +1,6 @@
+<select class="form-control" name="{{id}}" id="{{id}}">
+    <option disabled selected value> Prodaja</option>
+    % for prodaja in slascicar.prodaje:
+    <option value="{{prodaja.vrsta}}">{{prodaja.vrsta}}</option>
+    % end
+</select>
