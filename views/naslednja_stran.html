@@ -1,89 +1,128 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
 <h1>Dobiček: {{slascicar.dobicek()}}€</h1>
 <h2>Prihodki: {{slascicar.prihodki()}}€</h2>
 <h2>Stroški skupno: {{slascicar.stroski_skupno()}}€</h2>
 
-<h1>Prodaja</h1>
-<ul>
+<div class="container">
+<div class="row align-items-center">
+<div class="col-md-8">
+    <table class="table table-bordered table">
+        <thead class="table-danger">
+            <th>Sladica</th>
+            <th>Datum</th>
+            <th>Cena</th>
+            <th>Stroški</th>
+            <th>Prodaja</th>
+            <th>Količina</th>
+        </thead>
+        <tbody>
+            % for sladica in slascicar.vse_sladice:
+            <tr>
+                <td>{{sladica.ime}}</td>
+                <td>{{sladica.datum}}</td>
+                <td>{{sladica.cena}}€</td>
+                <td>{{sladica.strosek}}</td>
+                <td>{{sladica.prodaja}}</td>
+                <td>{{sladica.kolicina}}</td>
+            </tr>
+            %end
+        </tbody>
+    </table>
+    </div>
+
+<div class="col-md-4 offset-md-8">
+<ul class="list-group list-group-flush">
+    <div class="col px-sm-3"><div class="p-3 border bg-light">
+    <li class="list-group-item">
+        <h3>Prodaja</h3>
+    </li>
     % for prodaja in slascicar.prodaje:
-    <li>
+    <li class="list-group-item">
         {{prodaja.vrsta}}
     </li>
     %end
-    <li>
+    <li class="list-group-item">
         <form action="/dodaj-prodajo/" method="POST">
-            <label for="vrsta">Prodaja </label>: 
-            <input type="text" id="vrsta" name="vrsta">
-            <input type="submit" value="Dodaj prodajo!">
+            <div class="form-row">
+                <div class="col-auto">
+                    <input class="form-control" type="text" placeholder="Prodaja" id="vrsta" name="vrsta">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-outline-danger">
+                    Dodaj prodajo!
+                    </button> 
+                </div>
+            </div>
         </form>
     </li>
+    </div></div>
 </ul>
-<h4>
-    Najpogostejša prodaja je {{slascicar.najpogostejsa_prodaja()}}
-</h4>
-<h1>Stroški</h1>
-<ul>
+</div>
+
+<div class="col-md-4 offset-md-8">
+<ul class="list-group list-group-flush">
+    <div class="col px-ms-3"><div class="p-3 border bg-light">
+    <li class="list-group-item">
+        <h3>Stroški</h3>
+    </li>
     % for strosek in slascicar.vsi_stroski:
-    <li>
+    <li class="list-group-item">
         {{strosek.ime}}: {{strosek.znesek}}€
     </li>
     %end
-    <li>
+    <li class="list-group-item">
         <form action="/dodaj-strosek/" method="POST">
-            <label for="ime">Strošek </label>: 
-            <input type="text" id="ime" name="ime">
-            <label for="znesek">Znesek </label>: 
-            <input type="text" id="znesek" name="znesek">
-            <input type="submit" value="Dodaj strošek!">
+            <div class="form-row">
+                <div class="col-auto">
+                    <input class="form-control" type="text" placeholder="Strošek" id="ime" name="ime">
+                </div>
+                <div class="col-auto">
+                    <input class="form-control" type="text" placeholder="Znesek" id="znesek" name="znesek">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-outline-danger">
+                    Dodaj strošek!
+                    </button>
+                </div>
+            </div>    
         </form>
     </li>
+    </div></div>
 </ul>
-<style>
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-</style>
-<table>
-    <thead>
-        <th>Sladica</th>
-        <th>Datum</th>
-        <th>Cena</th>
-        <th>Stroški</th>
-        <th>Prodaja</th>
-        <th>Količina</th>
-    </thead>
-    <tbody>
-        % for sladica in slascicar.vse_sladice:
-        <tr>
-            <td>{{sladica.ime}}</td>
-            <td>{{sladica.datum}}</td>
-            <td>{{sladica.cena}}€</td>
-            <td>{{sladica.strosek}}</td>
-            <td>{{sladica.prodaja}}</td>
-            <td>{{sladica.kolicina}}</td>
-        </tr>
-        %end
-    </tbody>
-</table>
+</div>
+
+
 
 <h2>Dodaj sladico:</h2>
 <form action="/dodaj-sladico/" method="POST">
-    <label for="ime">Sladica</label>: 
-    <input type="text" id="ime" name="ime">
-    <label for="cena">Cena</label>: 
-    <input type="text" id="cena" name="cena">
-    % include('_izbira_stroskov.html', id='strosek', oznaka='Strosek')
-    % include('_izbira_prodaje.html', id='prodaja', oznaka='Prodaja')
-    <label for="ime">Količina </label>: 
-    <input type="text" id="kolicina" name="kolicina">
-    <input type="submit" value="Dodaj sladico!">
+    <div class="form-row">
+        <div class="col-auto">
+            <input class="form-control" type="text" placeholder="Sladica" id="ime" name="ime">
+        </div>
+        <div class="col-auto">
+            <input class="form-control" type="text" placeholder="Cena" id="cena" name="cena">
+        </div>
+        <div class="col-auto">
+            % include('_izbira_stroskov.html', id='strosek', oznaka='Strosek')
+        </div>
+        <div class="col-auto">
+            % include('_izbira_prodaje.html', id='prodaja', oznaka='Prodaja')
+        </div> 
+        <div class="col-auto">
+            <input class="form-control" type="text" placeholder="Količina" id="kolicina" name="kolicina">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-danger ">
+                Dodaj sladico!
+            </button>
+        </div>
+    </div>    
 </form>
 
 <h1>Prodane sladice</h1>
@@ -103,15 +142,26 @@ table {
     </li>
     %end
     <form action="/prodaj-sladico/" method="POST">
-        % include('_izbira_sladice.html', id='sladica', oznaka='Sladica')
-        % include('_izbira_prodaje.html', id='prodaja', oznaka='Prodaja')
-        <label for="ime">Količina </label>: 
-        <input type="text" id="kolicina" name="kolicina">
-        <input type="submit" value="Prodaj!">
+        <div class="form-row">
+            <div class="col-auto">
+                % include('_izbira_sladice.html', id='sladica', oznaka='Sladica')
+            </div>
+            <div class="col-auto">
+                % include('_izbira_prodaje.html', id='prodaja', oznaka='Prodaja')
+            </div>
+            <div class="col-auto">
+                <input class="form-control" placeholder="Količina" type="text" id="kolicina" name="kolicina">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-outline-danger">
+                    Prodaj!
+                </button>
+            </div>
+        </div>
     </form> 
     </li>
 </ul>
+</div>
+</div>
 
-<form action="/pomoc/" method="GET">
-    <input type="submit" value="Pomoč!">
-</form>
+

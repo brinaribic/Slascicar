@@ -1,7 +1,7 @@
 import bottle
 import os
 import random
-from model import Uporabnik, Slascicar
+from model import Slascicar
 from datetime import date
 
 uporabniki = {}

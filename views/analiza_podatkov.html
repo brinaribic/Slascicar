@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<ul class="nav justify-content-end">
+    <li class="nav-item">
+        <form action="/sladkosned/" method="GET">
+            <button type="submit" class="btn-danger btn-sm">
+               Osnovna stran
+            </button>
+        </form>
+    </li>
+    <li class="nav-item">
+        <form action="/stanje/" method="GET">
+            <button type="submit" class="btn-danger btn-sm">
+                Osebna beležka
+            </button>
+        </form>
+    </li>
+    <li class="nav-item">
+        <form action="/analiza_podatkov/" method="GET"  class="nav-link disabled">
+            <button type="submit" class="btn-danger btn-sm">
+                Analiza podatkov
+            </button>
+        </form>
+    </li>
+    <li class="nav-item">
+        <form action="/pomoc/" method="GET">
+            <button type="submit" class="btn-danger btn-sm">
+                Pomoč!
+            </button>
+        </form>
+    </li>
+  </ul>
+
+<h1 class="display-2 text-danger text-center">Dobiček: {{slascicar.dobicek()}}€</h1>
+<h1 class="display-5 text-secondary text-center">Prihodki: {{slascicar.prihodki()}}€</h1>
+<h1 class="display-5 text-secondary text-center">Stroški skupno: {{slascicar.stroski_skupno()}}€</h1>
+
+<div class="container px-lg-5">
+    <div class="row mx-lg-n5">
+      <div class="col py-3">
+            <ul>
+                <li class="list-group-item background">
+                    <h4>Neprodane sladice</h4>
+                </li>
+                % for sladica in slascicar.neprodane_sladice():
+                <li class="list-group-item text-danger">
+                    {{sladica.ime}}: {{sladica.cena}}€, količina: {{sladica.kolicina}}
+                </li>
+                % end 
+            </ul>
+      </div>
+      <div class="col py-3">
+        <ul>
+            <li class="list-group-item">
+                <h4>Prodane sladice</h4>
+            </li>
+            % for sladica in slascicar.prodane_sladice():
+            <li class="list-group-item">
+                {{sladica.ime}}: {{sladica.cena}}€, količina: {{sladica.kolicina}}
+            </li>
+            % end 
+        </ul>
+        </div>
+    </div>
+  </div>
+

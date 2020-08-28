@@ -1,3 +1,42 @@
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>  
+<ul class="nav justify-content-end">
+    <li class="nav-item">
+        <form action="/sladkosned/" method="GET" class="nav-link disabled">
+            <button type="submit" class="btn-danger btn-sm">
+               Osnovna stran
+            </button>
+        </form>
+    </li>
+    <li class="nav-item">
+        <form action="/stanje/" method="GET">
+            <button type="submit" class="btn-danger btn-sm">
+                Osebna beležka
+            </button>
+        </form>
+    </li>
+    <li class="nav-item">
+        <form action="/analiza_podatkov/" method="GET">
+            <button type="submit" class="btn-danger btn-sm">
+                Analiza podatkov
+            </button>
+        </form>
+    </li>
+    <li class="nav-item">
+        <form action="/pomoc/" method="GET">
+            <button type="submit" class="btn-danger btn-sm">
+                Pomoč
+            </button>
+        </form>
+    </li>
+  </ul>
+
 <h2><pre>
     _______  ___      _______  ______   ___   _  _______  _______  __    _  _______  ______  
     |       ||   |    |   _   ||      | |   | | ||       ||       ||  |  | ||       ||      | 
@@ -8,15 +47,30 @@
     |_______||_______||__| |__||______| |___| |_||_______||_______||_|  |__||_______||______| 
 </pre>
 </h2>
-
-<h1>
-    Dobrodošli v programu sladkosned!
+<h1 class="text-danger text-center">
+    Dobrodošli v programu Sladkosned!
 </h1>
 
-<form action="/stanje/" method="GET">
-    <input type="submit" value="Naslednja stran">
-</form>
-
+<div class="container">
+    <div class="row">
+      <div class="col-md-7 offset-md-3">
+        <ul>
+            <li>
+                za urejanje sladic pojdite na <a href="/stanje/">Osebna beležka</a>
+            </li>
+            <li>
+                za ogled podatkov pojdite na <a href="/analiza_podatkov/">Analiza podtkov</a>
+            </li>
+            <li>
+                če potrebujete pomoč, pojdite na <a href="/pomoc/">Pomoč</a>
+            </li>
+            <li>
+                Vse zgoraj navedene možnosti so tudi v zgornjem levem robu
+            </li>
+        </ul>
+      </div>
+</div>
+</body>
 
 
 
