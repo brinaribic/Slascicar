@@ -8,36 +8,15 @@
     |_______||_______||__| |__||______| |___| |_||_______||_______||_|  |__||_______||______| 
 </pre>
 </h2>
-<h1>Dobiček: {{slascicar.dobicek()}}€</h1>
-<h2>Prihodki: {{slascicar.prihodki()}}€</h2>
-<h2>Stroški skupno: {{slascicar.stroski_skupno()}}€</h2>
-<h1>Prodane sladice</h1>
-<ul>
-    % for sladica in slascicar.prodane_sladice():
-    <li>
-        {{sladica.ime}}: {{sladica.cena}}€
-    </li>
-    %end
-    </li>
-</ul>
-<h1>Neprodane sladice</h1>
-<ul>
-    % for sladica in slascicar.neprodane_sladice():
-    <li>
-        {{sladica.ime}}: {{sladica.cena}}€       
-    </li>
-    %end
-    <form action="/prodaj-sladico/" method="POST">
-        % include('_izbira_sladice.html', id='sladica', oznaka='Sladica')
-         % include('_izbira_prodaje.html', id='prodaja', oznaka='Prodaja')
-        <input type="submit" value="Prodaj!">
-    </form> 
-    </li>
-</ul>
+
+<h1>
+    Dobrodošli v programu sladkosned!
+</h1>
 
 <form action="/stanje/" method="GET">
-    <input type="submit" value="Poglej stanje!">
+    <input type="submit" value="Naslednja stran">
 </form>
+
 
 
 

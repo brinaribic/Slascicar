@@ -4,10 +4,7 @@ import random
 from model import Uporabnik, Slascicar
 from datetime import date
 
-imenik_s_podatki = 'uporbniki'
 uporabniki = {}
-DATOTEKA_S_SLADICAMI = 'stanje.json'
-
 for ime_datoteke in os.listdir('shranjeni_uporabniki'):
     st_uporabnika, koncnica = os.path.splitext(ime_datoteke)
     uporabniki[st_uporabnika] = Slascicar.nalozi_stanje(os.path.join
@@ -23,14 +20,21 @@ def trenutni_uporbnik():
 
 def shrani_trenutnega_uporabnika():
     st_uporabnika = bottle.request.get_cookie('st_uporabnika')
-    slascicar = trenutni_uporbnik()
     slascicar = uporabniki[st_uporabnika]
-    slascicar.shrani_stanje(f'{st_uporabnika}.json')
+    slascicar.shrani_stanje(os.path.join('shranjeni_uporabniki', f'{st_uporabnika}.json'))
 
 @bottle.get('/')
 def zacetna_stran():
+    bottle.redirect('/sladkosned/')
+
+@bottle.get('/sladkosned/')
+def osnovna_stran():
     slascicar = trenutni_uporbnik()
     return bottle.template('osnovna_stran.html', slascicar=slascicar)
+
+@bottle.get('/pomoc/')
+def pomoc():
+    return bottle.template('pomoc.html')
 
 @bottle.get('/stanje/')
 def stran_s_stanjem():
@@ -61,7 +65,8 @@ def dodaj_sladico():
     cena = int(bottle.request.forms.getunicode('cena'))
     strosek = slascicar.poisci_strosek(bottle.request.forms['strosek'])
     prodaja = slascicar.poisci_prodajo(bottle.request.forms['prodaja'])
-    slascicar.dodaj_sladico(ime, datum, cena, strosek, prodaja)
+    kolicina = int(bottle.request.forms.getunicode('kolicina'))
+    slascicar.dodaj_sladico(ime, datum, cena, strosek, prodaja, kolicina)
     shrani_trenutnega_uporabnika()
     bottle.redirect('/stanje/')
 
@@ -70,8 +75,9 @@ def prodaj_sladico():
     slascicar = trenutni_uporbnik()
     sladica = slascicar.poisci_sladico(bottle.request.forms['sladica'])
     prodaja = slascicar.poisci_prodajo(bottle.request.forms['prodaja'])
-    slascicar.prodaj_sladico(sladica, prodaja)
+    kolicina = int(bottle.request.forms.getunicode('kolicina'))
+    slascicar.prodaj_sladico(sladica, prodaja, kolicina)
     shrani_trenutnega_uporabnika()
-    bottle.redirect('/')
+    bottle.redirect('/stanje/')
 
 bottle.run(debug=True, reloader=True)

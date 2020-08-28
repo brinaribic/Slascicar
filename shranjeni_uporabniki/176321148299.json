@@ -1,0 +1,38 @@
+{
+    "prodaje": [
+        {
+            "vrsta": "prazno"
+        },
+        {
+            "vrsta": "dostava na dom"
+        }
+    ],
+    "stroski": [
+        {
+            "ime": "sestavine",
+            "znesek": 10
+        },
+        {
+            "ime": "dodatni delavec",
+            "znesek": 20
+        }
+    ],
+    "sladice": [
+        {
+            "ime": "torta",
+            "datum": "08/28/2020",
+            "cena": 50,
+            "strosek": "dodatni delavec",
+            "prodaja": "prazno",
+            "kolicina": 10
+        },
+        {
+            "ime": "pana cota",
+            "datum": "08/28/2020",
+            "cena": 6,
+            "strosek": "sestavine",
+            "prodaja": "prazno",
+            "kolicina": 22
+        }
+    ]
+}
