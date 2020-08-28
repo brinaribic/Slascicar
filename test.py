@@ -17,6 +17,5 @@ makroni = slascicar.dodaj_sladico('makroni', date.today(), 10, sestavine, osebno
 slascicar.prodaj_sladico(torta, osebno, 3)
 
 print(slascicar.prodane_sladice())
-
 print(slascicar.neprodane_sladice())
 
