@@ -1,3 +1,5 @@
+# Sladkosned
+
 Projektna naloga pri predmetu uvod v programiranje.
 
 Program 'Sladkosned' je namenjen slaščičarjem oz. vsem ki pripravljajo in prodajajo sladice.
