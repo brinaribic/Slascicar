@@ -12,7 +12,7 @@ class Slascicar:
         
     def dodaj_prodajo(self, vrsta):
         if vrsta in self._vrste_prodaj:
-            raise ValueError('Vrsta te prodaje ze obstaja!')
+            raise ValueError('Vrsta te prodaje že obstaja!')
         nova_prodaja = Prodaja(vrsta, self)
         self.prodaje.append(nova_prodaja)
         self._vrste_prodaj[vrsta] = nova_prodaja
@@ -20,7 +20,7 @@ class Slascicar:
 
     def dodaj_strosek(self, ime, strosek):
         if ime in self._imena_stroskov:
-            raise ValueError('Strosek s tem imenom ze obstaja!')
+            raise ValueError('Strošek s tem imenom že obstaja!')
         nov_strosek = Strosek(ime, strosek, self)
         self.vsi_stroski.append(nov_strosek)
         self._imena_stroskov[ime] = nov_strosek
@@ -36,11 +36,11 @@ class Slascicar:
 
     def _preveri_prodajo(self, prodaja):
         if prodaja.slascicar != self:
-            raise ValueError(f'Prodaja {prodaja} ne spada v to slascicarno!')
+            raise ValueError(f'Prodaja {prodaja} ne spada v to slaščičarno!')
 
     def _preveri_strosek(self, strosek):
         if strosek.slascicar != self:
-            raise ValueError(f'Strosek {strosek} ne spada v to slascicarno!')
+            raise ValueError(f'Strosek {strosek} ne spada v to slaščičarno!')
 
     def poisci_prodajo(self, vrsta):
         return self._vrste_prodaj[vrsta]
@@ -60,14 +60,14 @@ class Slascicar:
     def prodane_sladice(self):
         prodane_sladice = []
         for sladica in self.vse_sladice:
-            if sladica.prodaja.vrsta != 'prazno':
+            if sladica.prodaja.vrsta != 'neprodano':
                 prodane_sladice.append(sladica) 
         return prodane_sladice
 
     def neprodane_sladice(self):
         neprodane = []
         for sladica in self.vse_sladice:
-            if sladica.prodaja.vrsta == 'prazno':
+            if sladica.prodaja.vrsta == 'neprodano':
                 neprodane.append(sladica)
         return neprodane
           
@@ -128,13 +128,19 @@ class Slascicar:
         if set(strosek.znesek for strosek in self.vsi_stroski) == set():
             pass
         else:
-            return max(set(strosek.znesek for strosek in self.vsi_stroski))
+            m = max(set(strosek.znesek for strosek in self.vsi_stroski))
+            for strosek in self.vsi_stroski:
+                if m == strosek.znesek:
+                    return  strosek.ime
 
     def najdrazja_sladica(self):
-        m = max(set(sladica.cena for sladica in self.vse_sladice))
-        for sladica in self.vse_sladice:
-            if m == sladica.cena:
-                return sladica
+        if len(self.vse_sladice) == 0:
+            pass
+        else:
+            m = max(set(sladica.cena for sladica in self.vse_sladice))
+            for sladica in self.vse_sladice:
+                if m == sladica.cena:
+                    return sladica.ime
         
     def slovar_sladic(self):
         return {

@@ -81,7 +81,7 @@ def osnovne_meni():
             print()
             moznosti = [
                 ('dodaj prodajo', dodaj_prodajo),
-                ('dodaj strosek', dodaj_strosek),
+                ('dodaj strošek', dodaj_strosek),
                 ('dodaj sladico', dodaj_sladico),
                 ('poglej neprodane sladice', neprodane_sladice),
                 ('prodaj sladico', prodaj_sladico),
@@ -105,18 +105,18 @@ def osnovne_meni():
 
 def prikaz_sladic():
     for sladica in slascicar.vse_sladice:
-        if sladica.prodaja.vrsta  == 'prazno':
-            print(f'{rdece(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}, kolicina {sladica.kolicina}')
+        if sladica.prodaja.vrsta  == 'neprodano':
+            print(f'{rdece(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}, količina {sladica.kolicina}')
         else:
-            print(f'{modro(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}, kolicina {sladica.kolicina}')
+            print(f'{modro(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}, količina {sladica.kolicina}')
     print(f'Dobicek: {prikaz_skupnega_dobicka(slascicar.dobicek())}')
  
 def dodaj_prodajo():
-    vrsta = input("Vnesite nacin prodaje sladice (npr. osebni prevzem,...), ce sladica ni prodana vnesite 'prazno'> ")
+    vrsta = input("Vnesite način prodaje sladice (npr. osebni prevzem,...), če sladica ni prodana vnesite 'neprodano'> ")
     slascicar.dodaj_prodajo(vrsta)
 
 def dodaj_strosek():
-    ime = input('Vnesite ime stroska (npr. sestavine, dodatni delavec, ...)> ')
+    ime = input('Vnesite ime stroška (npr. sestavine, dodatni delavec, ...)> ')
     znesek = vnesi_stevilo('znesek> ')
     slascicar.dodaj_strosek(ime, znesek)
 
@@ -126,13 +126,13 @@ def dodaj_sladico():
     ime = input('Ime sladice>')
     datum = date.today()
     cena = vnesi_stevilo('Prodajna cena>')
-    print('Izberite strosek:')
+    print('Izberite strošek:')
     strosek = izberi_strosek(slascicar.vsi_stroski)
-    print("Izberite na kaksen nacin ste prodali sladico.")
+    print("Izberite na kakšen način ste prodali sladico.")
     prodaja = izberi_prodajo(slascicar.prodaje)
     kolicina = vnesi_stevilo('Količina>')
     slascicar.dodaj_sladico(ime, datum, cena, strosek, prodaja, kolicina)
-    print('Sladica uspesno dodana!')
+    print('Sladica uspešno dodana!')
 
 def izberi_strosek(stroski):
     return izberi([(strosek, strosek)for strosek in stroski],)
@@ -144,7 +144,7 @@ def neprodane_sladice():
     if len(slascicar.neprodane_sladice()) == 0:
         raise ValueError('Vse sladice so že prodane!')
     for sladica in slascicar.vse_sladice:
-        if sladica.prodaja.vrsta == 'prazno':
+        if sladica.prodaja.vrsta == 'neprodano':
             print(f'{rdece(sladica.ime)}: {sladica.cena}€')
 
 def izberi_neprodano_sladico(sladice):
@@ -155,7 +155,7 @@ def prodaj_sladico():
         raise ValueError('Vse sladice so že prodane!')
     print('katero sladico bi prodali?')
     sladica = izberi_neprodano_sladico(slascicar.neprodane_sladice())
-    print('Na kaksen nacin bi prodali sladico?')
+    print('Na kakšen način bi prodali sladico?')
     nova_prodaja = izberi_prodajo(slascicar.prodaje)
     kolicina = vnesi_stevilo('Koliko sladic bi prodali?>')
     slascicar.prodaj_sladico(sladica, nova_prodaja, kolicina)
@@ -163,18 +163,18 @@ def prodaj_sladico():
 
 def vse_sladice():
     for sladica in slascicar.vse_sladice:
-        if sladica.prodaja.vrsta == 'prazno':
+        if sladica.prodaja.vrsta == 'neprodano':
             print(f'{rdece(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}')
         else:
             print(f'{modro(sladica.ime)}: {sladica.cena}€, dne {sladica.datum}') 
 
 def stanje():
-    print(f'Skupni stroski so {slascicar.stroski_skupno()}€')
-    print(f'Vas dobicek je {prikaz_skupnega_dobicka(slascicar.dobicek())}')
+    print(f'Skupni stroški so {slascicar.stroski_skupno()}€')
+    print(f'Vas dobiček je {prikaz_skupnega_dobicka(slascicar.dobicek())}')
     print(f'Skupni prihodki so {slascicar.prihodki()}€')
     print(f'Najpogostejša prodaja je {slascicar.najpogostejsa_prodaja()}')
     print(f'Največji strošek je {slascicar.najvecji_stroski()}€')
-    print(f'Najdrazja sladica je {prikaz_sladice(slascicar.najdrazja_sladica())}')
+    print(f'Najdražja sladica je {prikaz_sladice(slascicar.najdrazja_sladica())}')
 
 
 zacetna_stran()
