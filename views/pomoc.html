@@ -30,7 +30,7 @@
     <li class="nav-item">
         <form action="/pomoc/" method="GET" class="nav-link disabled">
             <button type="submit" class="btn-danger btn-sm">
-                Pomoč!
+                Pomoč
             </button>
         </form>
     </li>
@@ -40,19 +40,41 @@
 <h2 class="subtitle text-secondary">Tukaj se lahko uporabnik bolje seznani z vsemi možnostmi programa.</h2>
 
 <p>
-    Program je namenjen slaščičarjem oz. vsem, ki prodajajo sladice. 
-    Po prijavi se uporabniku odpre <strong>"Osebna beležka"</strong>, v kateri lahko vidi vse sladice, vrste prodaj ter stroške. 
-    Če želi uporabnik natačnejšo analizo, odpre zavihek <strong>"Analiza podatkov"</strong>.
+    Na strani <a href="izboljsana_stran">Osebna beležka</a> uporabnik doda svoje sladice, stroške in prodaje. 
+    To naredi na sledeč način:
+    <ol>
+        <li>
+            Doda vrsto prodaje 
+            (npr. v gostilni, dostava na dom, neprodano, ...).
+        </li>
+        <li>
+            Doda strošek; njegovo ime in znesek, ki naj bo preračunan na eno enoto sladice
+            (npr. sestavine za eno torto)
+        </li>
+        <li>
+            Šele potem lahko doda sladico.
+            Najprej vnese ime sladice, datum je avtomatsko vnešen, 
+            ceno ene enote sladice, izbere prodajo med tistimi, 
+            ki jih je že sam prvotno dodal, 
+            prav tako izbere strošek in vnese količino.
+        </li>
+        <li>
+            Če želi dodati še neprodano sladico, 
+            najprej doda novo prodajo <strong>neprodano</strong>,
+            ostalo pa enako kot za vse sladice.
+        </li>
+        <li>
+            Neprodano sladico lahko tudi proda, 
+            in sicer med vsemi neprodanimi sladicami izbere tisto, 
+            ki jo želi prodati. Potem vnese še vrsto prodaje in 
+            količino sladice, ki jo želi prodati.
+        </li>
+    </ol>
 </p>
 <p>
-    V <i>osebni beležki</i> lahko uporabnik doda nove stroške in vrste prodaj. 
-    Doda lahko tudi sladico, bodisi prodano bodisi neprodano. 
-    Pri vnosu nove sladice, mora poleg imena sladice dodati tudi datum (kdaj je bila sladica narejena),
-    ceno ene enote (npr. ene torte), strošek, ki naj bo preračunan na eno enoto dodane sladice, prodajo ter količino. 
-    Če želi uporabnik dodati neprodano sladico, mora najprej dodati prodajo "<u>neprodano</u>".
-    Če doda neprodano sladico, jo lahko tudi kasneje "proda", tako da vnese na kakšen način jo je prodal in količino.
-</p>
-<p>
-    V <i>analizi podatkov</i> uporabnik posebej vidi vse prodane in neprodane sladice. Vidi tudi najdražjo sladico, 
-    najpogostejšo prodajo ter največje stroške.
+    Na strani <a href="analiza_podatkov">Analiza podatkov</a> uporabnik vidi svoj dobiček, 
+    vse prihodke in stroške.
+    Prikazane so tudi posebej prodane in neprodane sladice, ter najpogostejša prodaja, 
+    najdražja sladica in največji stroški.
+    Ta stran je zgolj informativno, tukaj uporabnik nič ne vnaša.
 </p>

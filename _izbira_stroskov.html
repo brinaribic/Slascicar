@@ -1,8 +1,0 @@
-<label for="{{id}}">{{oznaka}}:</label>
-
-<select name="{{id}}" id="{{id}}">
-    <option disabled selected value> -- izberi strosek-- </option>
-    % for strosek in slascicar.vsi_stroski:
-    <option value="{{strosek.ime}}">{{strosek.ime}}</option>
-    % end
-</select>
