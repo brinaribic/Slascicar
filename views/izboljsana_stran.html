@@ -40,6 +40,63 @@
 
 <div class="container">
     <div class="row no-gutters">
+        <div class="col-6 col-md-3">
+            <ul class="list-group list-group-flush">
+                <div class="col px-sm-3"><div class="p-3 border bg-light">
+                <li class="list-group-item">
+                    <h3>Prodaja</h3>
+                </li>
+                % for prodaja in slascicar.prodaje:
+                <li class="list-group-item">
+                    {{prodaja.vrsta}}
+                </li>
+                %end
+                <li class="list-group-item">
+                    <form action="/dodaj-prodajo/" method="POST">
+                        <div class="form-row">
+                            <div class="col-auto">
+                                <input class="form-control" type="text" placeholder="Prodaja" id="vrsta" name="vrsta">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-outline-danger">
+                                Dodaj!
+                                </button> 
+                            </div>
+                        </div>
+                    </form>
+                </li>
+                </div></div>
+            </ul>
+            <ul class="list-group list-group-flush">
+                <div class="col px-ms-3"><div class="p-3 border bg-light">
+                <li class="list-group-item">
+                    <h3>Stroški</h3>
+                </li>
+                % for strosek in slascicar.vsi_stroski:
+                <li class="list-group-item">
+                    {{strosek.ime}}: {{strosek.znesek}}€
+                </li>
+                %end
+                <li class="list-group-item">
+                    <form action="/dodaj-strosek/" method="POST">
+                        <div class="form-row">
+                            <div class="col-auto">
+                                <input class="form-control" type="text" placeholder="Strošek" id="ime" name="ime">
+                            </div>
+                            <div class="col-auto">
+                                <input class="form-control" type="text" placeholder="Znesek" id="znesek" name="znesek">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-outline-danger">
+                                Dodaj!
+                                </button>
+                            </div>
+                        </div>    
+                    </form>
+                </li>
+                </div></div>
+            </ul>
+        </div>
         <div class="col-sm-6 col-md-9">
             <table class="table table-bordered table">
                 <thead class="table-danger">
@@ -119,63 +176,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-        <div class="col-6 col-md-3">
-            <ul class="list-group list-group-flush">
-                <div class="col px-sm-3"><div class="p-3 border bg-light">
-                <li class="list-group-item">
-                    <h3>Prodaja</h3>
-                </li>
-                % for prodaja in slascicar.prodaje:
-                <li class="list-group-item">
-                    {{prodaja.vrsta}}
-                </li>
-                %end
-                <li class="list-group-item">
-                    <form action="/dodaj-prodajo/" method="POST">
-                        <div class="form-row">
-                            <div class="col-auto">
-                                <input class="form-control" type="text" placeholder="Prodaja" id="vrsta" name="vrsta">
-                            </div>
-                            <div class="col-auto">
-                                <button type="submit" class="btn btn-outline-danger">
-                                Dodaj!
-                                </button> 
-                            </div>
-                        </div>
-                    </form>
-                </li>
-                </div></div>
-            </ul>
-            <ul class="list-group list-group-flush">
-                <div class="col px-ms-3"><div class="p-3 border bg-light">
-                <li class="list-group-item">
-                    <h3>Stroški</h3>
-                </li>
-                % for strosek in slascicar.vsi_stroski:
-                <li class="list-group-item">
-                    {{strosek.ime}}: {{strosek.znesek}}€
-                </li>
-                %end
-                <li class="list-group-item">
-                    <form action="/dodaj-strosek/" method="POST">
-                        <div class="form-row">
-                            <div class="col-auto">
-                                <input class="form-control" type="text" placeholder="Strošek" id="ime" name="ime">
-                            </div>
-                            <div class="col-auto">
-                                <input class="form-control" type="text" placeholder="Znesek" id="znesek" name="znesek">
-                            </div>
-                            <div class="col-auto">
-                                <button type="submit" class="btn btn-outline-danger">
-                                Dodaj!
-                                </button>
-                            </div>
-                        </div>    
-                    </form>
-                </li>
-                </div></div>
-            </ul>
         </div>
     </div>
 </div>
