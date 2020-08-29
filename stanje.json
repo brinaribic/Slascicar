@@ -5,9 +5,6 @@
         },
         {
             "vrsta": "dostava na dom"
-        },
-        {
-            "vrsta": "prazno"
         }
     ],
     "stroski": [
@@ -46,7 +43,7 @@
             "datum": "2020-08-23",
             "cena": 4,
             "strosek": "dodatni delavec",
-            "prodaja": "prazno",
+            "prodaja": "dostava na dom",
             "kolicina": 2
         },
         {
